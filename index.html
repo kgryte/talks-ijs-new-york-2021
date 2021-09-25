@@ -26,33 +26,27 @@
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css">
 	<link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/zenburn.css">
+	<link rel="stylesheet" href="node_modules/reveal.js-appearance/plugin/appearance/appearance.css">
 	<link rel="stylesheet" href="css/fontawesome.css">
+	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/main.css">
 </head>
-
 <body>
-
 	<div class="reveal">
 
 		<!-- Any section element inside of this container is displayed as a slide -->
 		<div class="slides">
 
-			<section id="conf-splash" class="center" data-background-transition="zoom" data-background-image="img/conf_splash.png">
+			<section id="conf-splash" data-background-transition="slide" data-background-image="img/conf_splash.png">
 
 				<aside class="notes">
 					(next slide)
 				</aside>
 			</section>
 
-			<section id="pre-splash" class="center" data-background-transition="fade">
-				<aside class="notes">
-					(next slide)
-				</aside>
-			</section>
-
-			<section id="title-slide" class="center" data-transition="zoom-in convex-out">
-				<h1>Faster than NumPy<h1>
-				<h2>High-performance numerical computation in JavaScript</h2>
+			<section id="title-slide" data-background-transition="slide" data-background-image="img/cheetah.jpg">
+				<h1 class="fragment"><span class="animated skidRightBig">Faster than NumPy</span></h1>
+				<h2 class="fragment"><span class="animated skidRightBig">High-performance numerical computation in JavaScript</span></h2>
 
 				<aside class="notes">
 					<p>
@@ -60,18 +54,9 @@
 				</aside>
 			</section>
 
-			<section id="pre-splash" class="center">
-				<aside class="notes">
-					(next slide)
-				</aside>
-			</section>
-
-			<section id="splash" class="center" data-transition="zoom-in convex-out">
-				<div>
-					<a href="https://github.com/stdlib-js/stdlib"><img src="img/logo_banner.svg" alt="stdlib" class="undecorated" height="65%" width="65%"></a>
-				</div>
-				<div>
-					<small><a href="https://github.com/kgryte"><i class="fa fa-github"></i> Athan Reines</a> | <a href="https://twitter.com/kgryte"><i class="fa fa-twitter"></i> @kgryte</a> | <a href="https://twitter.com/stdlibjs"><i class="fa fa-twitter"></i> @stdlibjs</a></small>
+			<section id="splash">
+				<div class="fragment zoom-in">
+					<a href="https://github.com/stdlib-js/stdlib"><img src="img/logo.svg" alt="stdlib" class="undecorated" height="40%" width="40%"></a>
 				</div>
 				<aside class="notes">
 					<p>
@@ -80,7 +65,7 @@
 				</aside>
 			</section>
 
-			<section class="center">
+			<section>
 				<aside class="notes">
 					(next slide)
 				</aside>
@@ -93,19 +78,32 @@
 				</aside>
 			</section>
 
-			<section class="center">
+			<section data-background-image="img/conf_slide_bkgd.png">
 				<h2>The End</h2>
+				<nav class="author-links">
+					<ul>
+						<li>
+							<a href="https://github.com/kgryte"><i class="fa fa-github"></i> Athan Reines</a>
+						</li>
+						<li>
+							<a href="https://twitter.com/kgryte"><i class="fa fa-twitter"></i> @kgryte</a>
+						</li>
+						<li>
+							<a href="https://twitter.com/stdlibjs"><i class="fa fa-twitter"></i> @stdlibjs</a>
+						</li>
+					</ul>
+				</nav>
 			</section>
 
-		</div>
-
-	</div>
+		</div> <!-- /.slides -->
+	</div> <!-- /.reveal -->
 
 	<script src="node_modules/reveal.js/dist/reveal.js"></script>
 	<script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
 	<script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
 	<script src="node_modules/reveal.js/plugin/search/search.js"></script>
 	<script src="node_modules/reveal.js/plugin/math/math.js"></script>
+	<script src="node_modules/reveal.js-appearance/plugin/appearance/appearance.js"></script>
 	<script>
 		Reveal.initialize({
 			// Hide the controls:
@@ -120,6 +118,18 @@
 			// Only use left/right arrows to navigate slides:
 			'navigationMode': 'linear',
 
+			// Hide the presentation progress bar:
+			'progress': false,
+
+			// Disable the default layout (scaling and centering):
+			'disableLayout': true,
+
+			// Disable vertical centering:
+			'center': false,
+
+			// Specify the default transition style:
+			'transition': 'slide',
+
 			// Specify a list of plugins:
 			'plugins': [
 				// Syntax highlight code:
@@ -132,7 +142,10 @@
 				RevealSearch,
 
 				// Render mathematical equations:
-				RevealMath
+				RevealMath,
+
+				// Enable animations:
+				Appearance
 			]
 		});
 	</script>
