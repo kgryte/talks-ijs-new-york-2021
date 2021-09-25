@@ -1,0 +1,49 @@
+{
+  "private": true,
+  "name": "talks-ijs-new-york-2021",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "description": "Talk for the International JavaScript Conference (iJS) New York (2021).",
+  "author": {
+    "name": "Athan Reines",
+    "email": "kgryte@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Athan Reines",
+      "email": "kgryte@gmail.com"
+    }
+  ],
+  "scripts": {},
+  "main": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kgryte/talks-ijs-new-york-2021.git"
+  },
+  "keywords": [
+		"talk",
+		"slides",
+		"presentation",
+    "ml conference",
+    "new york",
+    "math",
+    "mathematics",
+    "numeric computing",
+    "numerical computing",
+    "scientific computing",
+    "machine learning",
+    "ai",
+    "artificial intelligence",
+    "javascript",
+    "js",
+    "nodejs",
+    "node",
+    "browser",
+    "numpy"
+	],
+  "bugs": {
+    "url": "https://github.com/kgryte/talks-ijs-new-york-2021/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
