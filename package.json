@@ -45,7 +45,8 @@
     "url": "https://github.com/kgryte/talks-ijs-new-york-2021/issues"
   },
   "dependencies": {
-    "reveal.js": "^4.1.3"
+    "reveal.js": "^4.1.3",
+    "reveal.js-appearance": "^1.1.0"
   },
   "devDependencies": {}
 }
