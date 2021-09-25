@@ -94,7 +94,7 @@ Desktop.ini
 
 # Node.js #
 ###########
-/node_modules/
+# /node_modules/
 pids
 *.pid
 *.seed
