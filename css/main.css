@@ -35,6 +35,10 @@ body {
 	font-size: 1em;
 }
 
+#splash {
+	top: 100px!important;
+}
+
 #splash a {
 	color: #000;
 }
