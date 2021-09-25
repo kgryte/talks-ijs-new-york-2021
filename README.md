@@ -23,7 +23,7 @@ $ npm install
 From the top-level directory,
 
 ```bash
-$ python -m SimpleHTTPServer 9000
+$ python -m http.server 9000
 ```
 
 and, in your browser, navigate to
