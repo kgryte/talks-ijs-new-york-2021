@@ -48,6 +48,11 @@ img {
 * Reveal.js.
 */
 
+.reveal .slides {
+	font-size: 1em;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
 .reveal .slides img.undecorated {
 	border: none;
 	box-shadow: none;
@@ -60,6 +65,7 @@ img {
 .reveal .slides h4,
 .reveal .slides h5,
 .reveal .slides h6 {
+	font-family: "LatoLatinWebLight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	text-transform: none;
 }
 
@@ -68,20 +74,47 @@ img {
 	height: 100vh;
 }
 
+.reveal .slides ::selection {
+  color: inherit;
+  background: transparent;
+  text-shadow: none;
+}
+
 /*
 * Title slide.
 */
 
-#title-slide {
-	color: #fff;
+.grid-8x8 {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: repeat(8, 1fr);
+
+	width: 100vw;
+	height: 100vh;
 }
 
-#title-slide h1 {
-	font-size: 1.5em;
+#title-slide .presentation-title {
+	grid-row-start: 4;
+	grid-row-end: span 1;
+	grid-column-start: 5;
+	grid-column-end: span 3;
+
+	font-family: "Libre Baskerville";
+	font-size: 1.8em;
+	font-weight: normal;
+
+	text-align: right;
 }
 
-#title-slide h2 {
+#title-slide .presentation-subtitle {
+	grid-row-start: 5;
+	grid-row-end: span 2;
+	grid-column-start: 5;
+	grid-column-end: span 3;
+
 	font-size: 1em;
+
+	text-align: right;
 }
 
 /*
