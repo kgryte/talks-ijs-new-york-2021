@@ -188,6 +188,43 @@ img {
 }
 
 /*
+* Thank you slide.
+*/
+
+#thank-you-slide .grid {
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+}
+
+#thank-you-slide .grid .content {
+	grid-row: 2 / span 1;
+	grid-column: 1 / span 2;
+
+	padding-left: 2em;
+
+	text-align: left;
+}
+
+#thank-you-slide .author-links ul {
+	margin-left: 0.45em;
+	list-style: none;
+}
+
+#thank-you-slide .author-links li {
+	display: inline-block;
+	font-size: 0.75em;
+}
+
+#thank-you-slide .author-links li a {
+	color: #000;
+}
+
+#thank-you-slide .author-links li a:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
+/*
 * Miscellaneous.
 */
 
@@ -195,19 +232,6 @@ img {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
 
-.author-links ul {
-	list-style: none;
-}
-
-.author-links li a {
-	color: #000;
-}
-
-.author-links li a:hover {
-	color: #000;
-	text-decoration: underline;
-}
-
 .fa-twitter {
-	color: #1DA1F2;
+	color: #000; /* #1DA1F2; */
 }
