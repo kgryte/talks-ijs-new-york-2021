@@ -20,6 +20,14 @@
 * General rules.
 */
 
+:root {
+	--numpy-dark-blue: rgb(77, 119, 207);
+	--numpy-light-blue: rgb(77, 171, 207);
+
+	--stdlib-orange: #F0AD3E;
+	--stdlib-blue: #00AEEF;
+}
+
 html {
 	box-sizing: border-box;
 }
@@ -97,9 +105,9 @@ img {
 }
 
 .reveal .slides ::selection {
-  color: inherit;
-  background: transparent;
-  text-shadow: none;
+	color: inherit;
+	background: transparent;
+	text-shadow: none;
 }
 
 .reveal .slides img.undecorated {
@@ -188,6 +196,57 @@ img {
 }
 
 /*
+* NumPy splash slide.
+*/
+
+#numpy-splash-slide {
+	/*background-color: var(--numpy-dark-blue);*/
+	/*background-image: linear-gradient(270deg, var(--numpy-light-blue), var(--numpy-dark-blue));*/
+	background-color: #fff;
+}
+
+#numpy-splash-slide .background {
+	background-color: #fff;
+}
+
+#numpy-splash-slide .grid {
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#numpy-splash-slide .grid img {
+	grid-row: 3 / span 1;
+	grid-column: 2 / span 3;
+
+	z-index: 2;
+}
+
+/*
+* NumPy slide.
+*/
+
+#numpy-slide .background {
+	background-color: var(--numpy-dark-blue);
+	/*background-image: linear-gradient(0deg, var(--numpy-light-blue), var(--numpy-dark-blue));*/
+}
+
+#numpy-slide .grid {
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+}
+
+#numpy-slide .description {
+	grid-row: 2 / span 1;
+	grid-column: 3 / span 6;
+
+	z-index: 2;
+
+	align-self: center;
+
+	color: #fff;
+}
+
+/*
 * Thank you slide.
 */
 
@@ -232,6 +291,63 @@ img {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
 
+.polygon-left-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	width: 50vw;
+	height: 100vh;
+
+	clip-path: polygon(0% 100%, 40% 100%, 60% 50%, 40% 0%, 0% 0%);
+
+	z-index: 0;
+}
+
+.polygon-right-background {
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	width: 50vw;
+	height: 100vh;
+
+	clip-path: polygon(100% 100%, 60% 100%, 40% 50%, 60% 0%, 100% 0%);
+
+	z-index: 0;
+}
+
+.diagonal-stripe-background {
+	position: absolute;
+	top: 10vh;
+	right: 0;
+
+	width: 100vw;
+	height: 80vh;
+
+	transform: skewY(-11deg);
+}
+
+.middle-stripe-background {
+	position: absolute;
+	top: 10vh;
+	right: 0;
+
+	width: 100vw;
+	height: 80vh;
+}
+
+.polygon-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	width: 100vw;
+	height: 100vh;
+
+	clip-path: polygon(0 100%, 100% 85%, 100% 15%, 0% 0%);
+}
+
 .fa-twitter {
-	color: #000; /* #1DA1F2; */
+	color: #000;
 }

@@ -129,25 +129,59 @@
 				</aside>
 			</section>
 
+			<section id="numpy-splash-slide" data-transition="slide-in fade-out">
+				<div class="background middle-stripe-background"></div>
+				<div class="grid">
+					<img class="animated fadeIn slow" data-delay="500" src="img/numpy_logo.svg" href="NumPy logo">
+				</div>
+
+				<aside class="notes">
+					<p>
+						Given that this is a JavaScript conference and I don't want to assume that everyone attending this talk knows Python and is familiar with the PyData numerical computing landscape, I'd like to begin our discussion by providing a high-level introduction to NumPy.
+					</p>
+				</aside>
+			</section>
+
+			<section id="numpy-slide" data-transition="fade-in slide-out">
+
+				<div class="background polygon-background"></div>
+				<div class="grid">
+					<p class="description">
+						CPU-based library for performing numerical computation on multidimensional arrays.
+					</p>
+				</div>
+
+				<aside class="notes">
+					<p>
+						Originally written in 2005, NumPy is a CPU-based library for performing numerical computation on multidimensional arrays.
+					</p>
+					<p>
+						Without the assistance of a multi-process library, NumPy operations are blocking, running on a single-core and executing synchronously in sequential order.
+					</p>
+					<p>
+						NumPy is able to leverage parallelism through SIMD operations, depending on host architecture and compilation.
+					</p>
+					<p>
+						Relevant for later discussion, while other libraries exist to address limitations in NumPy--for example, through the use of GPUs (CuPy), GPUs/TPUs (Torch/TensorFlow), or distributed computation (Dask), NumPy does not, by itself, enjoy any inherit advantages compared to a comparable library written in JavaScript by virtue of being written in and for Python.
+					</p>
+					<p>
+						The same issues, such as single-threading and limited host memory, that are seen as limitations in JavaScript apply equally to Python, and thus NumPy, as well.
+					</p>
+				</aside>
+			</section>
+
 			<section>
 				<aside class="notes">
 					(next slide)
 				</aside>
 			</section>
 
-			<section>
-
-				<aside class="notes">
-
-				</aside>
-			</section>
-
 			<section id="thank-you-slide" data-transition="fade-in slide-out" data-background-image="img/splash/mountains_with_fog_1920x1280.jpg">
 				<div class="grid">
 					<div class="content">
-						<h1 class="fragment"><span class="animated fadeIn">Thank you.</span></h1>
-						<nav class="fragment author-links">
-							<ul class="animated fadeIn">
+						<h1><span class="animated fadeIn slow" data-delay="500">Thank you.</span></h1>
+						<nav class="author-links">
+							<ul class="animated fadeIn slow" data-delay="1000">
 								<li>
 									<a href="https://github.com/kgryte"><i class="fa fa-github"></i> Athan Reines</a>
 								</li>
