@@ -117,6 +117,30 @@ img {
 }
 
 /*
+* Code.
+*/
+
+.reveal .slides pre {
+	height: 100vh;
+	width: 100%;
+	max-width: 800px;
+
+	margin: 0;
+
+	box-shadow: 0 0 10px #000;
+}
+
+.reveal .slides code {
+	padding: 1em;
+
+	font-size: 1.2em;
+}
+
+.reveal .slides .hljs-ln-numbers {
+	padding-right: 1.1em;
+}
+
+/*
 * Title slide.
 */
 
@@ -225,9 +249,12 @@ img {
 * NumPy slide.
 */
 
+#numpy-slide .background-wrap {
+	filter: drop-shadow(0 5px 10px rgba(50, 50, 0, 0.5));
+}
+
 #numpy-slide .background {
 	background-color: var(--numpy-dark-blue);
-	/*background-image: linear-gradient(0deg, var(--numpy-light-blue), var(--numpy-dark-blue));*/
 }
 
 #numpy-slide .grid {
@@ -235,7 +262,7 @@ img {
 	grid-template-rows: repeat(3, 1fr);
 }
 
-#numpy-slide .description {
+#numpy-slide .grid p {
 	grid-row: 2 / span 1;
 	grid-column: 3 / span 6;
 
@@ -244,6 +271,150 @@ img {
 	align-self: center;
 
 	color: #fff;
+
+	font-size: 1.1em;
+}
+
+#numpy-slide .grid p:nth-child(2) {
+	font-size: 1.3em;
+}
+
+/*
+* ndarray use cases splash slide.
+*/
+
+#ndarray-use-cases-splash-slide .grid {
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#ndarray-use-cases-splash-slide .background {
+	width: 100vw;
+	height: 100vh;
+}
+
+#ndarray-use-cases-splash-slide .background-wrap {
+	filter: drop-shadow(0 0 20px rgba(50, 50, 0, 0.5));
+}
+
+#ndarray-use-cases-splash-slide .background {
+	background-color: #fff;
+}
+
+#ndarray-use-cases-splash-slide .grid h1 {
+	grid-row: 3 / span 1;
+	grid-column: 7 / span 3;
+
+	z-index: 2;
+
+	padding: 0.5em;
+
+	align-self: center;
+	text-align: right;
+}
+
+/*
+* Falcon demo slide.
+*/
+
+#falcon-demo-slide iframe {
+	width: 100vw;
+	height: 95vh;
+
+	max-width: 100%;
+	max-height: 95%;
+}
+
+/*
+* Mikola voxel demo slide.
+*/
+
+#mikola-voxel-demo-slide iframe {
+	width: 80vw;
+	height: 80vh;
+
+	margin-top: 10vh;
+
+	box-shadow: 0 0 5px #d2d2d2;
+}
+
+/*
+* regl cnn demo slide.
+*/
+
+#regl-cnn-demo-slide {
+	text-align: left;
+}
+
+#regl-cnn-demo-slide iframe {
+	width: 80vw;
+	height: 100vh;
+
+	max-height: 100%;
+
+	margin-left: -135px;
+}
+
+/*
+* TensorFlow pac man demo slide.
+*/
+
+#tensorflow-pacman-demo-slide iframe {
+	width: 80vw;
+	height: 80vh;
+
+	margin-top: 10vh;
+
+	box-shadow: 0 0 10px #b2b2b2;
+}
+
+/*
+* ndarray conceptual diagram slide.
+*/
+
+#ndarray-conceptual-diagram-slide .grid {
+	grid-template-columns: repeat(1, 1fr);
+	grid-template-rows: repeat(1, 1fr);
+}
+
+#ndarray-conceptual-diagram-slide .grid div {
+	grid-row: 1 / span 1;
+	grid-column: 1 / span 1;
+
+	z-index: 2;
+
+	align-self: center;
+}
+
+/*
+* Array of arrays slide.
+*/
+
+#array-of-arrays-slide .grid {
+	grid-template-columns: repeat(15, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#array-of-arrays-slide .code {
+	grid-row: 1 / span 5;
+	grid-column: 1 / span 9;
+}
+
+#array-of-arrays-slide .text {
+	grid-row: 2 / span 2;
+	grid-column: 10 / span 5;
+
+	text-align: left;
+
+	font-size: 0.7em;
+}
+
+#array-of-arrays-slide .text ul {
+	margin-top: 0.5em;
+}
+
+#array-of-arrays-slide .text li {
+	margin-bottom: 0.5em;
 }
 
 /*
@@ -288,7 +459,7 @@ img {
 */
 
 .darken-background {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
 }
 
 .polygon-left-background {
@@ -317,6 +488,32 @@ img {
 	z-index: 0;
 }
 
+.lower-trapezoid-background {
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	width: 50vw;
+	height: 100vh;
+
+	clip-path: polygon(100% 100%, 0% 100%, 0% 80%, 100% 20%);
+
+	z-index: 0;
+}
+
+.right-trapezoid-background {
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	width: 50vw;
+	height: 100vh;
+
+	clip-path: polygon(100% 100%, 70% 100%, 50% 0%, 100% 0%);
+
+	z-index: 0;
+}
+
 .diagonal-stripe-background {
 	position: absolute;
 	top: 10vh;
@@ -337,7 +534,7 @@ img {
 	height: 80vh;
 }
 
-.polygon-background {
+.polygon-background-1 {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -345,7 +542,18 @@ img {
 	width: 100vw;
 	height: 100vh;
 
-	clip-path: polygon(0 100%, 100% 85%, 100% 15%, 0% 0%);
+	clip-path: polygon(0% 100%, 100% 85%, 100% 15%, 0% 0%);
+}
+
+.polygon-background-2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	width: 100vw;
+	height: 100vh;
+
+	clip-path: polygon(0% 85%, 100% 100%, 100% 0%, 0% 15%);
 }
 
 .fa-twitter {

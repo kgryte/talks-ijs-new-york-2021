@@ -29,8 +29,8 @@
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/reset.css">
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/theme/simple.css">
-	<link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/zenburn.css">
 	<link rel="stylesheet" href="node_modules/reveal.js-appearance/plugin/appearance/appearance.css">
+	<link rel="stylesheet" href="css/highlight.css">
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/main.css">
 </head>
@@ -76,19 +76,19 @@
 
 				<div class="grid">
 					<div class="fragment">
-						<a href="https://www.quansight.com/"><img class="animated flipInX" src="img/quansight_logo.png" alt="Quansight" class="undecorated" height="70%" width="70%"></a>
+						<a href="https://www.quansight.com/"><img class="animated flipInX" data-src="img/quansight_logo.png" alt="Quansight" class="undecorated" height="70%" width="70%"></a>
 					</div>
 
 					<div class="fragment">
-						<a href="https://labs.quansight.org/"><img class="animated flipInX" src="img/quansight_labs_logo.png" alt="Quansight Labs" class="undecorated" width="70%"></a>
+						<a href="https://labs.quansight.org/"><img class="animated flipInX" data-src="img/quansight_labs_logo.png" alt="Quansight Labs" class="undecorated" width="70%"></a>
 					</div>
 
 					<div class="fragment">
-						<a href="https://data-apis.org/"><img class="animated flipInX" src="img/data_apis_logo.svg" alt="Data APIs" class="undecorated" height="40%" width="40%"></a>
+						<a href="https://data-apis.org/"><img class="animated flipInX" data-src="img/data_apis_logo.svg" alt="Data APIs" class="undecorated" height="40%" width="40%"></a>
 					</div>
 
 					<div class="fragment">
-						<a href="https://stdlib.io/docs/api/latest"><img class="animated flipInX" src="img/stdlib_logo_banner.svg" alt="stdlib" class="undecorated"></a>
+						<a href="https://stdlib.io/docs/api/latest"><img class="animated flipInX" data-src="img/stdlib_logo_banner.svg" alt="stdlib" class="undecorated"></a>
 					</div>
 				</div>
 
@@ -132,26 +132,38 @@
 			<section id="numpy-splash-slide" data-transition="slide-in fade-out">
 				<div class="background middle-stripe-background"></div>
 				<div class="grid">
-					<img class="animated fadeIn slow" data-delay="500" src="img/numpy_logo.svg" href="NumPy logo">
+					<img class="animated fadeIn slow" data-delay="500" data-src="img/numpy_logo.svg" href="NumPy logo">
 				</div>
 
 				<aside class="notes">
 					<p>
-						Given that this is a JavaScript conference and I don't want to assume that everyone attending this talk knows Python and is familiar with the PyData numerical computing landscape, I'd like to begin our discussion by providing a high-level introduction to NumPy.
+						Given that this is a JavaScript conference and I don't want to assume that everyone attending this talk knows Python and is familiar with the PyData numerical computing landscape, I'd like to begin our discussion by providing a high-level introduction to NumPy and array computing.
 					</p>
 				</aside>
 			</section>
 
-			<section id="numpy-slide" data-transition="fade-in slide-out">
+			<section id="numpy-slide" data-transition="fade-in fade-out">
 
-				<div class="background polygon-background"></div>
+				<div class="background-wrap">
+					<div class="background polygon-background-1"></div>
+				</div>
 				<div class="grid">
-					<p class="description animated fadeIn slow" data-delay="500">
-						CPU-based library for performing numerical computation on multidimensional arrays.
+					<p class="fragment fade-in-then-out">
+						<span class="animated fadeIn slow" data-delay="500">
+							CPU-based library for performing numerical computation on multidimensional arrays.
+						</span>
+					</p>
+					<p class="fragment">
+						<span class="animated fadeIn" data-delay="500">
+							ndarray
+						</span>
 					</p>
 				</div>
 
 				<aside class="notes">
+					<p>
+						(fragment)
+					</p>
 					<p>
 						Originally written in 2005, NumPy is a CPU-based library for performing numerical computation on multidimensional arrays.
 					</p>
@@ -166,6 +178,202 @@
 					</p>
 					<p>
 						The same issues, such as single-threading and limited host memory, that are seen as limitations in JavaScript apply equally to Python, and thus NumPy, as well.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						The fundamental building block of NumPy is the <code>ndarray</code>, which is a data structure for describing multidimensional arrays.
+					</p>
+				</aside>
+			</section>
+
+			<section id="ndarray-use-cases-splash-slide" data-background-image="img/splash/keyboard.jpg" data-transition="fade-in fade-out" data-transition-speed="fast">
+
+				<div class="background-wrap">
+					<div class="background right-trapezoid-background"></div>
+				</div>
+				<div class="grid">
+					<h1>Demos</h1>
+				</div>
+
+				<aside class="notes">
+					<p>
+						To help motivate why <code>ndarrays</code> are so useful, I'd like to start with a few demos of web applications which are using <code>ndarray</code> data structures to perform various computational tasks.
+					</p>
+				</aside>
+			</section>
+
+			<section id="falcon-demo-slide" data-transition="fade-in fade-out">
+
+				<iframe data-src="https://vega.github.io/falcon/flights/"></iframe>
+
+				<aside class="notes">
+					<p>
+						The first demo is Falcon, a library for high-performance cross-filtering of large datasets directly in the browser.
+					</p>
+					<p>
+						What is shown is a collection of histograms visualizing different facets of a 1 million flight dataset.
+					</p>
+					<p>
+						Internally, Falcon is using an ndarray data structure to aggregate and bin the flight data in real-time as a user interacts with the graph brushes.
+					<p>
+						(play with brushes and demonstrate responsiveness)
+					</p>
+				</aside>
+			</section>
+
+			<section id="mikola-voxel-demo-slide" data-transition="fade-in fade-out">
+
+				<iframe data-src="https://mikolalysenko.github.io/voxel-mipmap-demo/"></iframe>
+
+				<aside class="notes">
+					<p>
+						The second demo is a project by Mikola Lysenko, which provides an interactive application for demonstrating texture mapping.
+					</p>
+					<p>
+						Internally, Mikola uses ndarrays for processing the voxel data and creating meshes.
+					</p>
+					<p>
+						(select a few examples from the dropdown and interact with one or two of the rendered objects)
+					</p>
+				</aside>
+			</section>
+
+			<section id="regl-cnn-demo-slide" data-transition="fade-in fade-out">
+
+				<iframe data-src="https://erkaman.github.io/regl-cnn/src/demo.html"></iframe>
+
+				<aside class="notes">
+					<p>
+						The third demo is a project by one of the regl developers demonstrating the application of convolutional neural network to handwritten digit recognition.
+					</p>
+					<p>
+						Internally, this demo uses ndarrays for implementing the convolutional neural network and performing various tensor operations.
+					</p>
+					<p>
+						(draw a few digits)
+					</p>
+				</aside>
+			</section>
+
+			<section id="tensorflow-pacman-demo-slide" data-transition="fade-in fade-out">
+
+				<iframe data-src="https://storage.googleapis.com/tfjs-examples/webcam-transfer-learning/dist/index.html"></iframe>
+
+				<aside class="notes">
+					<p>
+						The next demo comes from the TensorFlow.js team.
+					</p>
+					<p>
+						Similar to NumPy, ndarrays are the fundamental data structure in TensorFlow.js.
+					</p>
+					<p>
+						In this demo--which I won't play because I'm already using my web cam for this talk--one can train a neural network directly in the browser to recognize gestures in order to control pac man as he navigates a maze.
+					</p>
+				</aside>
+			</section>
+
+			<!-- TODO: additional demos of ndarray use cases? -->
+
+			<section id="multidimensional-array-splash-slide" data-transition="fade-in fade-out">
+
+				<!-- TODO -->
+
+				<aside class="notes">
+					<p>
+						But what is a multi-dimensional array?
+					</p>
+					<p>
+						Most of us will have a working understanding of multi-dimensional arrays, often within the context of a list of lists (or an array of arrays in JavaScript).
+					</p>
+					<p>
+						(next slide)
+					</p>
+				</aside>
+			</section>
+
+			<section id="array-of-arrays-slide" data-transition="fade-in">
+				<div class="grid">
+
+					<div class="code">
+						<pre><code class="language-javascript" data-trim data-line-numbers="1-5|7-9|11-13|15-17">
+arr = [
+	[ 1, 2, 3 ],
+	[ 4, 5, 6 ],
+	[ 7, 8, 9 ]
+];
+
+// Get individual item:
+v = arr[1][1];
+// returns 5
+
+// Get row:
+row = arr[1];
+// returns [ 4, 5, 6 ]
+
+// Get column: (!!!)
+col = [ arr[0][1], arr[1][1], arr[2][1] ];
+// returns [ 2, 5, 8 ]
+						</code></pre>
+					</div>
+
+					<div class="text">
+						<p class="fragment">
+							Let \( n \) be the number of elements in the innermost dimension and \( d \) be the number of dimensions.
+						</p>
+						<ul>
+							<li class="fragment">\( O(d) \) &mdash; data access</li>
+							<li class="fragment">\( O(nd^d) \) &mdash; traversal</li>
+							<li class="fragment">\( O(n^{d-1}) \) &mdash; storage requirements</li>
+						</ul>
+					</div>
+
+				</div>
+
+				<aside class="notes">
+					<p>
+						Most of us are TODO
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+
+					</p>
+					<p>
+						(dereferencing)
+					</p>
+					<p>
+
+					</p>
+					<p>
+						(intermediate arrays containing pointers)
+					</p>
+				</aside>
+			</section>
+
+			<section id="ndarray-conceptual-diagram-slide" data-transition="fade-in slide-out">
+
+				<!-- TODO: make this schematic an animation using D3 -->
+
+				<div class="grid">
+					<div class="fragment">
+						<img class="animated fadeIn slow" data-src="img/ndarray_schematic.svg" data-delay="500">
+					</div>
+				</div>
+				<aside class="notes">
+					<p>
+						TODO: describe NumPy ndarray conceptual diagram
+					</p>
+					<p>
+						An ndaray is collection of "items" having the same data type.
+					</p>
+					<p>
+						An ndarray is a <strong>homogeneous</strong> data structure, in which every item occupies a memory block of the same size, and in which all blocks are interpreted in exactly the same way.
+					</p>
+					<p>
+						How each item in the array is to be interpreted is specified by a separate data-type object.
 					</p>
 				</aside>
 			</section>
@@ -243,6 +451,26 @@
 
 			// Specify the default transition style:
 			'transition': 'slide',
+
+			// Configure the Appearance plugin:
+			'appearance': {
+				// Display the elements when moving backward in the presentation:
+				'hideagain': false
+			},
+
+			// Configure the plugin for rendering mathematical equations:
+			'math': {
+				'mathjax': '/node_modules/mathjax/es5/tex-mml-chtml.js',
+
+				'config': 'TeX-AMS_HTML-full',
+
+				'TeX': {
+					'inlineMath': [
+						[ '$', '$' ],
+						[ '\\(', '\\)' ]
+					]
+				}
+			},
 
 			// Specify a list of plugins:
 			'plugins': [
