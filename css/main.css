@@ -472,7 +472,7 @@ img {
 */
 
 #implicit-arrays-splash-slide .grid {
-	grid-template-columns: repeat(10, 1fr);
+	grid-template-columns: repeat(12, 1fr);
 	grid-template-rows: repeat(5, 1fr);
 }
 
@@ -489,11 +489,11 @@ img {
 
 #implicit-arrays-splash-slide .grid h1 {
 	grid-row: 3 / span 1;
-	grid-column: 1 / span 5;
+	grid-column: 2 / span 5;
 
 	z-index: 2;
 
-	padding: 0.75em;
+	padding: 0;
 
 	align-self: center;
 	text-align: left;
@@ -529,6 +529,71 @@ img {
 }
 
 #implicit-arrays-slide .text li {
+	margin-bottom: 0.5em;
+}
+
+/*
+* Strided arrays splash slide.
+*/
+
+#strided-arrays-splash-slide .grid {
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#strided-arrays-splash-slide .background {
+	width: 100vw;
+	height: 100vh;
+
+	background-color: #fff;
+}
+
+#strided-arrays-splash-slide .background-wrap {
+	filter: drop-shadow(0 0 20px rgba(50, 50, 0, 0.5));
+}
+
+#strided-arrays-splash-slide .grid h1 {
+	grid-row: 3 / span 1;
+	grid-column: 2 / span 5;
+
+	z-index: 2;
+
+	padding: 0;
+
+	align-self: center;
+	text-align: left;
+
+	font-size: 1.5em;
+}
+
+/*
+* Strided arrays slide.
+*/
+
+#strided-arrays-slide .grid {
+	grid-template-columns: repeat(15, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#strided-arrays-slide .code {
+	grid-row: 1 / span 5;
+	grid-column: 1 / span 9;
+}
+
+#strided-arrays-slide .text {
+	grid-row: 1 / span 5;
+	grid-column: 10 / span 5;
+
+	text-align: left;
+
+	font-size: 0.7em;
+}
+
+#strided-arrays-slide .text ul {
+	margin-top: 0.5em;
+}
+
+#strided-arrays-slide .text li {
 	margin-bottom: 0.5em;
 }
 

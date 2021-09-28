@@ -353,7 +353,7 @@
 				</aside>
 			</section>
 
-			<!-- TODO: a nice animation would be displaying a generalized depiction of array of arrays -->
+			<!-- TODO: an animation displaying a generalized depiction of array of arrays -->
 
 			<section id="array-of-arrays-slide" data-transition="fade-in">
 				<div class="grid">
@@ -389,7 +389,7 @@ arr = [
 
 					<div class="text">
 						<p class="fragment">
-							Let \( n \) be the number of elements in the innermost dimension and \( d \) be the number of dimensions.
+							Let \( n \) be the number of elements per dimension and \( d \) be the number of dimensions.
 						</p>
 						<ul>
 							<li class="fragment">\( O(d) \) &mdash; data access</li>
@@ -451,7 +451,7 @@ arr = [
 						(fragment)
 					</p>
 					<p>
-						Let \( n \) be the number of elements in the innermost dimension and \( d \) be the number of dimensions.
+						Let \( n \) be the number of elements per dimension and \( d \) be the number of dimensions.
 					</p>
 					<p>
 						(fragment)
@@ -508,7 +508,7 @@ arr = [
 				</aside>
 			</section>
 
-			<!-- TODO: a nice animation would be converting an array of arrays schematic to an implicit array -->
+			<!-- TODO: an animation converting an array of arrays schematic to an implicit array -->
 
 			<section id="implicit-arrays-slide" data-transition="fade-in">
 				<div class="grid">
@@ -537,7 +537,7 @@ col = [arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1]];
 
 					<div class="text">
 						<p class="fragment">
-							Let \( n \) be the number of elements in the innermost dimension, \( d \) be the number of dimensions, and \( B \) be the cache line size.
+							Let \( n \) be the number of elements per dimension, \( d \) be the number of dimensions, and \( B \) be the cache line size.
 						</p>
 						<ul>
 							<li class="fragment">\( O(1) \) &mdash; data access</li>
@@ -596,7 +596,7 @@ col = [arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1]];
 						(fragment)
 					</p>
 					<p>
-						Let \( n \) be the number of elements in the innermost dimension, \( d \) be the number of dimensions, and \( B \) be the cache line size.
+						Let \( n \) be the number of elements per dimension, \( d \) be the number of dimensions, and \( B \) be the cache line size.
 					</p>
 					<p>
 						(fragment)
@@ -631,7 +631,200 @@ col = [arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1]];
 				</aside>
 			</section>
 
-			<!-- TODO: strided arrays: a generalization of implicit arrays; use building from below for splash -->
+			<section id="strided-arrays-splash-slide" data-background-image="img/splash/building_from_below.jpg" data-transition="slide-in fade-out">
+
+				<div class="background-wrap">
+					<div class="background left-trapezoid-background"></div>
+				</div>
+				<div class="grid">
+					<h1 class="animated fadeIn slow" data-delay="500">Strided arrays</h1>
+				</div>
+
+				<aside class="notes">
+					<p>
+						Implicit arrays are limited in two aspects: (1) their fixed nature and (2) inefficient slicing.
+					</p>
+					<p>
+						To overcome, these limitations we can generalize the mapping of a multidimensional array to a linear layout via <strong>strided arrays</strong>.
+					</p>
+					<p>
+						(next slide)
+					</p>
+				</aside>
+			</section>
+
+			<section id="strided-arrays-slide" data-transition="fade-in">
+				<div class="grid">
+
+					<div class="code">
+						<pre><code class="language-javascript" data-trim data-line-numbers="1-5|7-8|9|10|12-14|16-20|20-24">
+x = [
+	1, 2, 3,
+	4, 5, 6,
+	7, 8, 9
+];
+
+// Define meta data:
+shx = [ 3, 3 ]; // shape
+ox = 0;         // offset
+sx = [ 3, 1 ];  // strides (row-major/lexicographic)
+
+// Get individual item:
+v = x[ (1*sx[0]) + (1*sx[1]) + ox ];
+// returns 5
+
+// Define row:
+shr = [ shx[1] ];     // [ 3 ]
+sr = [ sx[1] ];       // [ 1 ]
+or = (1*sx[0]) + ox;  // 3
+
+// Define column:
+shc = [ shx[0] ];     // [ 3 ]
+sc = [ sx[0] ];       // [ 3 ]
+oc = (1*sx[1]) + ox;  // 1
+						</code></pre>
+					</div>
+
+					<div class="text">
+						<p class="fragment">
+							\[ \textrm{index}(x_{i_0 i_1 \dots i_{d-1}}) = o + \sum^{d-1}_{k = 0} s_k i_k \]
+
+							where \( d \) is the number of dimensions, \( o \) is the offset, \( s_k \) are the strides, and \( i_k \) are the dimension subscripts.
+						</p>
+						<p class="fragment">
+							Let \( n \) be the number of elements per dimension, \( d \) be the number of dimensions, and \( B \) be the cache line size.
+						</p>
+						<ul>
+							<li class="fragment">\( O(1) \) &mdash; data access</li>
+							<li class="fragment">\( O(\frac{n^d}{B}) \) &mdash; traversal</li>
+							<li class="fragment">\( O(d) \) &mdash; slicing</li>
+							<li class="fragment">\( O(d) \) &mdash; extra storage requirements</li>
+						</ul>
+					</div>
+
+				</div>
+
+				<aside class="notes">
+					<p>
+						A strided array generalizes an implicit array by explicitly defining meta data (aka, a <strong>dope vector</strong>) describing the data layout.
+					</p>
+					<p>
+						Similar to the previous examples, we'll define a single flat array containing the elements of our multidimensional array.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Next, we'll define meta describing the data layout.
+					</p>
+					<p>
+						First, we define the shape of our array. In this case, a three-by-three matrix.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Next, we define an offset which tells us the location of the first indexed element in the underlying flat array. In this case, we set the offset to the first element.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Next, we define strides which tell us how many elements in the underlying flat array we need to move a data pointer (via <strong>dead reckoning</strong>) until we reach the next item.
+					</p>
+					<p>
+						In this case, to iterate to the next row, we need to skip three elements. To iterate to the next column, we simply move to the next element.
+					</p>
+					<p>
+						At this point, the shape, strides, and offset meta data allow us to completely describe our two-dimensional matrix and can be generalized to multidimensional arrays having an arbitrary number of dimensions (aka, rank).
+					</p>
+					<p>
+						I should note, however, that depending on the language, we may need additional meta data, such as the underlying array data type, in order to correctly resolve item memory locations and interpret the item value.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						To retrieve an individual element, we apply a similar formula as for implicit arrays, substituting in our strides and adding an offset term.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						To create a row slice, we can do as before with implicit arrays and explicitly extract values to a new array, <strong>or</strong> we can create a "view" over the flat array by defining meta data describing the row.
+					</p>
+					<p>
+						Here, in order to access the second row, we define the shape to be the number of columns, the strides to be the column stride, and the offset to point to the first element in the second row.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Similarly, we can create a view for the second column by defining the shape to be the number of rows, the strides to be the row stride, and the offset to point to the first element in the second column.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						We can generalize mapping the subscripts of an item in a multidimensional array to an item in the underlying flat array according to the following formula, where \( d \) is the number of dimensions, \( o \) is the offset, \( s_k \) are the strides, and \( i_k \) are the dimension subscripts.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						In general, we have the following performance characteristics for strided arrays.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Let \( n \) be the number of elements per dimension, \( d \) be the number of dimensions, and \( B \) be the cache line size.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Data access is effectively \( O(1) \), same as for implicit arrays.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Traversal is the same as for implicit arrays, benefiting from data locality, although this depends heavily on the strides.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Where strided arrays can significantly depart from implicit arrays is in slicing, as, by defining meta data describing the slice, we can create a view over the underlying collection. Accordingly, slicing scales according to the number of dimensions.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Lastly, when compared to implicit arrays, strided arrays have extra storage requirements which scale with the number of dimensions.
+					</p>
+					<p>
+						In summary, implicit arrays have better theoretical performance guarantees than their array of arrays counterparts.
+					</p>
+					<p>
+						(next slide)
+					</p>
+				</aside>
+			</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			<section id="ndarray-conceptual-diagram-slide" data-transition="fade-in slide-out">
 
