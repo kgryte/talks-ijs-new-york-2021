@@ -315,10 +315,10 @@
 						Now that we've gotten a sense as to the types of applications which utilize ndarrays, let's move on to the more technical aspects of their implementation.
 					</p>
 					<p>
-						To start, we should ask "what is a multi-dimensional array?"
+						To start, we should ask "what is a multidimensional array?"
 					</p>
 					<p>
-						Most of us have a working understanding of multi-dimensional arrays and their implementation, often within the context of a list of lists (or an array of arrays in JavaScript).
+						Most of us have a working understanding of multidimensional arrays and their implementation, often within the context of a list of lists (or an array of arrays in JavaScript).
 					</p>
 					<p>
 						(next slide)
@@ -330,7 +330,7 @@
 				<div class="grid">
 
 					<div class="code">
-						<pre><code class="language-javascript" data-trim data-line-numbers="1-5|7-9|11-13|15-17">
+						<pre><code class="language-javascript" data-trim data-line-numbers="1-5|7-9|11-13|15-17|19-24">
 arr = [
 	[ 1, 2, 3 ],
 	[ 4, 5, 6 ],
@@ -348,6 +348,13 @@ row = arr[1];
 // Get column: (!!!)
 col = [ arr[0][1], arr[1][1], arr[2][1] ];
 // returns [ 2, 5, 8 ]
+
+// Column-major:
+arr = [
+	[ 1, [ 2, [ 3,
+	  4,   5,   6,
+	  7 ], 8 ], 9 ]
+];
 						</code></pre>
 					</div>
 
@@ -366,22 +373,76 @@ col = [ arr[0][1], arr[1][1], arr[2][1] ];
 
 				<aside class="notes">
 					<p>
-						Most of us are TODO
+						As an example, consider this example. Here, we have a list of three arrays, each with items.
+					</p>
+					<p>
+						Interpreted as a two-dimensional data structure, this would comprise a 3x3 matrix, where each row is represented by a nested list/array.
 					</p>
 					<p>
 						(fragment)
 					</p>
 					<p>
-
+						To access an individual item, we index into each dimension, dereferencing nested lists/arrays until we reached the last dimension.
 					</p>
 					<p>
-						(dereferencing)
+						(fragment)
 					</p>
 					<p>
-
+						For higher-dimensional arrays, to retrieve sub-vectors, matrices, and tensors, we perform a similar procedure, except that we stop dereferencing lists once we've reached the desired dimensionality.
 					</p>
 					<p>
-						(intermediate arrays containing pointers)
+						Here, we're accessing the vector representing the second row in our matrix.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Suppose, however, that we want to access the second column in our matrix. How do we do that?
+					</p>
+					<p>
+						Unfortunately, accessing the second column is not as simple as dereferencing a single list.
+					</p>
+					<p>
+						Instead, we need to dereference each row, retrieve the item in the desired column, and then copy to a new array.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Of course, if we wanted to optimize for column access, we could change how we store the data, such that items belonging to the same column are stored together.
+					</p>
+					<p>
+						However, in both scenarios, optimizing data locality for one type of data access de-optimizes the other.
+					</p>
+					<p>
+						In general, for a list of lists/array of arrays approach to storing multidimensional data, we have the following performance characteristics.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Let \( n \) be the number of elements in the innermost dimension and \( d \) be the number of dimensions.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Data access scales linearly with the number dimensions, as we dereference pointers to nested blocks of memory.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Array traversal scales according to a power law and, importantly, is not cache coherent.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Lastly, storage requirements scale exponentially with the number of dimensions due to the need for intermediate arrays containing pointers.
+					</p>
+					<p>
+						(next slide)
 					</p>
 				</aside>
 			</section>
