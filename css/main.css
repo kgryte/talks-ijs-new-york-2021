@@ -144,6 +144,17 @@ img {
 * Title slide.
 */
 
+#title-slide .background {
+	width: 100vw;
+	height: 100vh;
+
+	background-color: #fff;
+}
+
+#title-slide .right-trapezoid-background {
+	clip-path: polygon(100% 100%, 40% 100%, 60% 0%, 100% 0%);
+}
+
 #title-slide .grid {
 	grid-template-columns: repeat(8, 1fr);
 	grid-template-rows: repeat(8, 1fr);
@@ -170,16 +181,29 @@ img {
 * About me splash slide.
 */
 
+#about-me-splash-slide .background {
+	width: 100vw;
+	height: 100vh;
+
+	background-color: #fff;
+}
+
+#about-me-splash-slide .right-trapezoid-background {
+	clip-path: polygon(100% 100%, 45% 100%, 65% 0%, 100% 0%);
+}
+
 #about-me-splash-slide .grid {
-	grid-template-columns: repeat(8, 1fr);
-	grid-template-rows: repeat(8, 1fr);
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(12, 1fr);
 }
 
 #about-me-splash-slide .title {
-	grid-row: 3 / span 1;
-	grid-column: 5 / span 3;
+	grid-row: 7 / span 1;
+	grid-column: 8 / span 4;
 
 	text-shadow: 0 2px 3px #c2c2c2;
+
+	z-index: 2;
 }
 
 /*
@@ -291,14 +315,12 @@ img {
 #ndarray-use-cases-splash-slide .background {
 	width: 100vw;
 	height: 100vh;
+
+	background-color: #fff;
 }
 
 #ndarray-use-cases-splash-slide .background-wrap {
 	filter: drop-shadow(0 0 20px rgba(50, 50, 0, 0.5));
-}
-
-#ndarray-use-cases-splash-slide .background {
-	background-color: #fff;
 }
 
 #ndarray-use-cases-splash-slide .grid h1 {
@@ -380,14 +402,12 @@ img {
 #multidimensional-array-splash-slide .background {
 	width: 100vw;
 	height: 100vh;
+
+	background-color: #fff;
 }
 
 #multidimensional-array-splash-slide .background-wrap {
 	filter: drop-shadow(0 0 20px rgba(50, 50, 0, 0.5));
-}
-
-#multidimensional-array-splash-slide .background {
-	background-color: #fff;
 }
 
 #multidimensional-array-splash-slide .grid h1 {
@@ -447,14 +467,12 @@ img {
 #implicit-arrays-splash-slide .background {
 	width: 100vw;
 	height: 100vh;
+
+	background-color: #fff;
 }
 
 #implicit-arrays-splash-slide .background-wrap {
 	filter: drop-shadow(0 0 20px rgba(50, 50, 0, 0.5));
-}
-
-#implicit-arrays-splash-slide .background {
-	background-color: #fff;
 }
 
 #implicit-arrays-splash-slide .grid h1 {
