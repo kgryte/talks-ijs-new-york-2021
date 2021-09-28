@@ -391,6 +391,18 @@ img {
 }
 
 /*
+* Real-time k-means clustering demo slide.
+*/
+
+#real-time-kmeans-demo-slide .image-wrapper {
+	width: 80vw;
+	margin: 0 auto;
+	margin-top: 40px;
+
+	box-shadow: 0 0 10px #d2d2d2;
+}
+
+/*
 * Multidimensional arrays splash slide.
 */
 
