@@ -30,6 +30,7 @@
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
 	<link rel="stylesheet" href="node_modules/reveal.js/dist/theme/simple.css">
 	<link rel="stylesheet" href="node_modules/reveal.js-appearance/plugin/appearance/appearance.css">
+
 	<link rel="stylesheet" href="css/highlight.css">
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/main.css">
@@ -121,7 +122,7 @@
 						Also, as part of my work, I am a core maintainer of the open-source project, <a href="https://stdlib.io/docs/api/latest">stdlib</a>, a standard library for JavaScript and Node.js.
 					</p>
 					<p>
-						One of the foremost goals of stdlib is to provide the equivalent of NumPy and SciPy for <strong>numerical</strong> and <strong>scientific</strong> computing applications on the web and in Node.js.
+						One of the foremost goals of stdlib is to provide the equivalent of NumPy and SciPy for <strong>numerical</strong> and <strong>scientific</strong> computation on the web and in Node.js.
 					</p>
 					<p>
 						Most of my work on stdlib focuses on developing APIs for high-performance numerical operations on multi-dimensional arrays in JavaScript and C--the precise subject of this talk. :)
@@ -185,6 +186,9 @@
 					<p>
 						The fundamental building block of NumPy is the <code>ndarray</code>, which is a data structure for describing multidimensional arrays.
 					</p>
+					<p>
+						I'll discuss the technical aspects of ndarrays throughout this talk, but, before I do, we should probably ask what is so special about multidimensional arrays.
+					</p>
 				</aside>
 			</section>
 
@@ -199,7 +203,10 @@
 
 				<aside class="notes">
 					<p>
-						To help motivate why <code>ndarrays</code> are so useful, I'd like to start with a few demos of web applications which are using <code>ndarray</code> data structures to perform various computational tasks.
+						I think the best way to demonstrate why ndarrays <strong>are</strong> special is to show examples of the types of applications made possible through the use of ndarrays.
+					</p>
+					<p>
+						So to help motivate why, in a general sense, <code>ndarrays</code> are so useful, I want to briefly digress and start with a few demos of web applications which are using <code>ndarray</code> data structures to perform various computational tasks.
 					</p>
 				</aside>
 			</section>
@@ -210,7 +217,19 @@
 
 				<aside class="notes">
 					<p>
-						The first demo is Falcon, a library for high-performance cross-filtering of large datasets directly in the browser.
+						Most of us probably have some sense that multidimensional arrays are useful in traditional numerical and scientific computing fields, even if we don't typically work with them ourselves.
+					</p>
+					<p>
+						We've undoubtedly heard of "big data", machine learning, and artificial intelligence and probably assume that they involve working with large datasets with potentially many dimensions.
+					</p>
+					<p>
+						At university, we may have used MATLAB and taken a data science course on Coursera or somewhere else.
+					</p>
+					<p>
+						So my first demo should not come as too much of a surprise in that it involves working with large datasets.
+					</p>
+					<p>
+						Currently displayed is Falcon, a library for high-performance cross-filtering of large datasets directly in the browser.
 					</p>
 					<p>
 						What is shown is a collection of histograms visualizing different facets of a 1 million flight dataset.
@@ -246,7 +265,7 @@
 
 				<aside class="notes">
 					<p>
-						The third demo is a project by one of the regl developers demonstrating the application of convolutional neural network to handwritten digit recognition.
+						The third demo is a project by one of the regl developers demonstrating the application of convolutional neural networks to handwritten digit recognition.
 					</p>
 					<p>
 						Internally, this demo uses ndarrays for implementing the convolutional neural network and performing various tensor operations.
@@ -266,10 +285,10 @@
 						The next demo comes from the TensorFlow.js team.
 					</p>
 					<p>
-						Similar to NumPy, ndarrays are the fundamental data structure in TensorFlow.js.
+						In this demo--which I won't play because I'm already using my web cam for this talk--one can train a neural network directly in the browser to recognize gestures in order to control pac man as pac man navigates a maze.
 					</p>
 					<p>
-						In this demo--which I won't play because I'm already using my web cam for this talk--one can train a neural network directly in the browser to recognize gestures in order to control pac man as he navigates a maze.
+						Similar to NumPy, ndarrays are the fundamental data structure in TensorFlow.js underpinning all the numerical computations.
 					</p>
 				</aside>
 			</section>
@@ -282,10 +301,13 @@
 
 				<aside class="notes">
 					<p>
-						But what is a multi-dimensional array?
+						Now that we've gotten a sense as to the types of applications which utilize ndarrays, let's move on to the more technical aspects of their implementation.
 					</p>
 					<p>
-						Most of us will have a working understanding of multi-dimensional arrays, often within the context of a list of lists (or an array of arrays in JavaScript).
+						To start, we should ask "what is a multi-dimensional array?"
+					</p>
+					<p>
+						Most of us have a working understanding of multi-dimensional arrays and their implementation, often within the context of a list of lists (or an array of arrays in JavaScript).
 					</p>
 					<p>
 						(next slide)
@@ -353,28 +375,142 @@ col = [ arr[0][1], arr[1][1], arr[2][1] ];
 				</aside>
 			</section>
 
+			<!-- TODO: strided arrays -->
+
 			<section id="ndarray-conceptual-diagram-slide" data-transition="fade-in slide-out">
 
-				<!-- TODO: make this schematic an animation using D3 -->
+				<!-- NOTE: the following are non-presentation elements used for driving the SVG animations -->
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+				<span class="fragment"></span>
 
 				<div class="grid">
-					<div class="fragment">
-						<img class="animated fadeIn slow" data-src="img/ndarray_schematic.svg" data-delay="500">
+					<div data-animate data-src="img/ndarray_schematic.svg">
+						<!--
+						{
+							"setup": [
+								{
+									"element": "#svg-from-data-type-arrow, #svg-from-array-item-arrow, #svg-array-item-object",
+									"modifier": "attr",
+									"parameters": [ {"class": "fragment", "data-fragment-index": "5"} ]
+								},
+								{
+									"element": "#svg-array-item",
+									"modifier": "attr",
+									"parameters": [ {"class": "fragment", "data-fragment-index": "4"} ]
+								},
+								{
+									"element": "#svg-to-data-type-arrow, #svg-data-type-box",
+									"modifier": "attr",
+									"parameters": [ {"class": "fragment", "data-fragment-index": "3"} ]
+								},
+								{
+									"element": "#svg-array-with-meta-data",
+									"modifier": "attr",
+									"parameters": [ {"class": "fragment", "data-fragment-index": "2"} ]
+								},
+								{
+									"element": "#svg-array-header",
+									"modifier": "attr",
+									"parameters": [ {"class": "fragment", "data-fragment-index": "1"} ]
+								},
+								{
+									"element": "#svg-array-items",
+									"modifier": "attr",
+									"parameters": [ {"class": "fragment", "data-fragment-index": "0"} ]
+								}
+							]
+						}
+						-->
 					</div>
 				</div>
+
 				<aside class="notes">
 					<p>
-						TODO: describe NumPy ndarray conceptual diagram
+						(fragment)
 					</p>
 					<p>
-						An ndaray is collection of "items" having the same data type.
+						An ndarray is collection of "items", where each item has the same data type.
 					</p>
 					<p>
-						An ndarray is a <strong>homogeneous</strong> data structure, in which every item occupies a memory block of the same size, and in which all blocks are interpreted in exactly the same way.
+						And as a corollary, an ndarray is a <strong>homogeneous</strong> data structure, in which every item occupies a memory block of the same size and in which all blocks are interpreted in exactly the same way.
 					</p>
 					<p>
-						How each item in the array is to be interpreted is specified by a separate data-type object.
+						(fragment)
 					</p>
+					<p>
+						Simply having a collection of items is not sufficient, however, to perform operations on multidimensional data. We need to specify meta data describing the data location and layout.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						By associating the meta data with the collection of items is enough to fully describe and interface with an ndarray.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						How each item in the array is to be interpreted is specified by a separate data-type object (or identifier) as referenced by the ndarray meta data.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Using the meta data, we locate and access can an individual item within the collection.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						In Python (and in un-optimized JavaScript), an accessed item is "boxed", being associated with meta data and interpreted according to the previously mentioned data type object.
+					</p>
+					<p>
+						All of this comprises the conceptual model of an ndarray.
+					</p>
+					<p>
+						TODO: consider adding an aside that the layout need not be contiguous (i.e., can be a strided array); but probably we'll get to that.
+					</p>
+			</section>
+
+			<!-- TODO: additional slides -->
+
+			<section>
+
+				<!-- NOTE: the following are non-presentation elements used for driving the SVG animations -->
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+
+				<div data-animate data-src="img/layers_schematic.svg">
+					<!--
+					{
+						"setup": [
+							{
+								"element": "#top-layer",
+								"modifier": "attr",
+								"parameters": [ {"class": "fragment", "data-fragment-index": "0"} ]
+							},
+							{
+								"element": "#middle-layer",
+								"modifier": "attr",
+								"parameters": [ {"class": "fragment", "data-fragment-index": "1"} ]
+							},
+							{
+								"element": "#bottom-layer",
+								"modifier": "attr",
+								"parameters": [ {"class": "fragment", "data-fragment-index": "2"} ]
+							}
+						]
+					}
+					-->
+				</div>
+
+				<aside class="notes">
+					(next slide)
 				</aside>
 			</section>
 
@@ -426,6 +562,10 @@ col = [ arr[0][1], arr[1][1], arr[2][1] ];
 	<script src="node_modules/reveal.js/plugin/search/search.js"></script>
 	<script src="node_modules/reveal.js/plugin/math/math.js"></script>
 	<script src="node_modules/reveal.js-appearance/plugin/appearance/appearance.js"></script>
+
+	<script src="js/plugins/animate/plugin.js"></script>
+	<script src="js/plugins/animate/svg.js"></script>
+
 	<script>
 		Reveal.initialize({
 			// Hide the controls:
@@ -487,7 +627,10 @@ col = [ arr[0][1], arr[1][1], arr[2][1] ];
 				RevealMath,
 
 				// Enable animations:
-				Appearance
+				Appearance,
+
+				// Enable SVG animations:
+				RevealAnimate
 			]
 		});
 	</script>
