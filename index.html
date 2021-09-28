@@ -367,6 +367,7 @@ arr = [
 						<ul>
 							<li class="fragment">\( O(d) \) &mdash; data access</li>
 							<li class="fragment">\( O(n^{d}d) \) &mdash; traversal</li>
+							<li class="fragment">\( O(n^{d}) \) &mdash; slicing</li>
 							<li class="fragment">\( O(n^{d-1}) \) &mdash; extra storage requirements</li>
 						</ul>
 					</div>
@@ -435,7 +436,13 @@ arr = [
 						(fragment)
 					</p>
 					<p>
-						Array traversal scales according to a power law and, importantly, is not guaranteed to be cache coherent.
+						Array traversal scales according to \( O(d n^{d}) \) and, importantly, is not guaranteed to be cache coherent.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Slicing (i.e., extracting a subarray) scales according to \( O(n^{d}) \) ).
 					</p>
 					<p>
 						(fragment)
@@ -492,11 +499,11 @@ v = arr[ (1*3) + 1 ];
 // returns 5
 
 // Get row:
-row = [ arr[(1*3)+0], arr[(1*3)+1, arr[(1*3)+2] ];
+row = [arr[(1*3)+0], arr[(1*3)+1], arr[(1*3)+2]];
 // returns [ 4, 5, 6 ]
 
 // Get column:
-col = [ arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1] ];
+col = [arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1]];
 // returns [ 2, 5, 8 ]
 						</code></pre>
 					</div>
@@ -508,6 +515,7 @@ col = [ arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1] ];
 						<ul>
 							<li class="fragment">\( O(1) \) &mdash; data access</li>
 							<li class="fragment">\( O(\frac{n^d}{B}) \) &mdash; traversal</li>
+							<li class="fragment">\( O(\frac{n^d}{B}) \) &mdash; slicing</li>
 							<li class="fragment">\( O(0) \) &mdash; extra storage requirements</li>
 						</ul>
 					</div>
@@ -579,7 +587,16 @@ col = [ arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1] ];
 						(fragment)
 					</p>
 					<p>
-						Lastly, an implicit array does require extra storage requirements, as we no longer need intermediate arrays containing pointers.
+						Similar to traversal, slicing scales according to \( O(n^d) \), being partially offset by improved data locality.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Lastly, an implicit array does not require extra storage, as we no longer need intermediate arrays containing pointers.
+					</p>
+					<p>
+						In summary, implicit arrays have better theoretical performance guarantees than their array of arrays counterparts.
 					</p>
 					<p>
 						(next slide)
@@ -587,7 +604,7 @@ col = [ arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1] ];
 				</aside>
 			</section>
 
-			<!-- TODO: strided arrays -->
+			<!-- TODO: strided arrays: a generalization of implicit arrays -->
 
 			<section id="ndarray-conceptual-diagram-slide" data-transition="fade-in slide-out">
 
