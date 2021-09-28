@@ -369,6 +369,42 @@ img {
 }
 
 /*
+* Multidimensional arrays splash slide.
+*/
+
+#multidimensional-array-splash-slide .grid {
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#multidimensional-array-splash-slide .background {
+	width: 100vw;
+	height: 100vh;
+}
+
+#multidimensional-array-splash-slide .background-wrap {
+	filter: drop-shadow(0 0 20px rgba(50, 50, 0, 0.5));
+}
+
+#multidimensional-array-splash-slide .background {
+	background-color: #fff;
+}
+
+#multidimensional-array-splash-slide .grid h1 {
+	grid-row: 3 / span 1;
+	grid-column: 1 / span 5;
+
+	z-index: 2;
+
+	padding: 0.75em;
+
+	align-self: center;
+	text-align: left;
+
+	font-size: 1.5em;
+}
+
+/*
 * ndarray conceptual diagram slide.
 */
 
@@ -510,6 +546,19 @@ img {
 	height: 100vh;
 
 	clip-path: polygon(100% 100%, 70% 100%, 50% 0%, 100% 0%);
+
+	z-index: 0;
+}
+
+.left-trapezoid-background {
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	width: 50vw;
+	height: 100vh;
+
+	clip-path: polygon(0% 100%, 40% 100%, 60% 0%, 0% 0%);
 
 	z-index: 0;
 }
