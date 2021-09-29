@@ -669,6 +669,70 @@ img {
 }
 
 /*
+* NumPy strided loops slides.
+*/
+
+#numpy-strided-loops-slide-1 .grid,
+#numpy-strided-loops-slide-2 .grid {
+	grid-template-columns: repeat(1, 1fr);
+	grid-template-rows: repeat(1, 1fr);
+}
+
+#numpy-strided-loops-slide-1 .code,
+#numpy-strided-loops-slide-2 .code {
+	grid-row: 1 / span 1;
+	grid-column: 1 / span 1;
+}
+
+
+#numpy-strided-loops-slide-1 .code pre,
+#numpy-strided-loops-slide-2 .code pre {
+	max-width: 100vw;
+}
+
+#numpy-strided-loops-slide-1 .code,
+#numpy-strided-loops-slide-2 .code {
+	margin: 0 auto;
+}
+
+/*
+* Numpy perf slide.
+*/
+
+#numpy-perf-slide .grid {
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+
+	row-gap: 10px;
+	column-gap: 10px;
+}
+
+#numpy-perf-slide .grid div {
+	display: block;
+	align-self: center;
+}
+
+#numpy-perf-slide .grid div:nth-child(1) {
+	grid-row: 1 / span 1;
+	grid-column: 1 / span 1;
+}
+
+#numpy-perf-slide .grid div:nth-child(2) {
+	grid-row: 1 / span 1;
+	grid-column: 2 / span 1;
+}
+
+#numpy-perf-slide .grid div:nth-child(3) {
+	grid-row: 2 / span 1;
+	grid-column: 1 / span 1;
+}
+
+#numpy-perf-slide .grid div:nth-child(4) {
+	grid-row: 2 / span 1;
+	grid-column: 2 / span 1;
+}
+
+/*
 * Thank you slide.
 */
 

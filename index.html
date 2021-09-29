@@ -985,6 +985,8 @@ offset = 4;
 				</aside>
 			</section>
 
+			<!-- TODO: consider adding a schematic demonstrating tiling (with applications to broadcasting) -->
+
 			<section id="ndarray-conceptual-diagram-slide" data-transition="fade-in slide-out">
 
 				<!-- NOTE: the following are non-presentation elements used for driving the SVG animations -->
@@ -1082,11 +1084,78 @@ offset = 4;
 						All of this comprises the conceptual model of an ndarray.
 					</p>
 					<p>
-						As I hope is evident from previous slides, at its essence, NumPy's ndarray is an implementation of a strided array.
+						As I hope is evident from previous slides, at its essence, NumPy's ndarray is a fancy wrapper around a strided array, with some additional meta data.
+					</p>
+					<p>
+						(next slide)
 					</p>
 			</section>
 
-			<!-- TODO: what does NumPy do with strided arrays to achieve is relatively high performance? NumPy vectorized ops slide. -->
+			<!-- TODO: what does NumPy do with ndarrays to achieve high performance? -->
+
+			<!-- Hardware optimized libraries such as OpenBLAS, vectorized operations (interfaces, such as the universal function interface (aka ufuncs) which explicitly operate on ndarrays, rather than relying on users to perform element-wise iteration in Python), SIMD instructions, broadcasting -->
+
+			<section id="numpy-perf-slide">
+
+				<div class="grid">
+					<div class="fragment">
+						<h2 class="animated flipInX">Vectorization</h2>
+					</div>
+
+					<div class="fragment">
+						<h2 class="animated flipInX">SIMD</h2>
+					</div>
+
+					<div class="fragment">
+						<h2 class="animated flipInX">Hardware Optimization</h2>
+					</div>
+
+					<div class="fragment">
+						<h2 class="animated flipInX">Broadcasting</h2>
+					</div>
+				</div>
+
+				<aside class="notes">
+					<p>
+						So how does NumPy leverage ndarrays to unlock better performance?
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						First, NumPy utilizes vectorization, providing interfaces such as the universal function interface (aka "ufunc") which operate on ndarrays, rather than relying on users to perform element-wise iteration in userland.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Second, NumPy takes advantage of SIMD operations for parallelization (i.e., operating on elements within a strided array at the same time).
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Third, NumPy binds to hardware optimized libraries for various numerical computing tasks, such as using OpenBLAS for linear algebra.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Lastly, NumPy supports broadcasting semantics (i.e., the ability to tile a lower dimensional array to a higher dimension without copying data).
+					</p>
+					<p>
+						For example, when multiplying a matrix by scalar, NumPy does not instantiate a second matrix with the same dimensions as the first and with every element having a value equal to the scalar.
+					</p>
+					<p>
+						Instead, NumPy virtually repeats a scalar simply by creating a single element ndarray with a modified shape and strides.
+					</p>
+					<p>
+						Accordingly, broadcasting enables better performance by avoiding data copies.
+					</p>
+				</aside>
+			</section>
+
+
 
 			<!-- TODO: additional slides -->
 
@@ -1094,46 +1163,6 @@ offset = 4;
 
 
 
-
-
-
-			<section>
-
-				<!-- NOTE: the following are non-presentation elements used for driving the SVG animations -->
-				<span class="fragment"></span>
-				<span class="fragment"></span>
-				<span class="fragment"></span>
-
-				<div data-animate data-src="img/layers_schematic.svg">
-					<!--
-					{
-						"setup": [
-							{
-								"element": "#top-layer",
-								"modifier": "attr",
-								"parameters": [ {"class": "fragment", "data-fragment-index": "0"} ]
-							},
-							{
-								"element": "#middle-layer",
-								"modifier": "attr",
-								"parameters": [ {"class": "fragment", "data-fragment-index": "1"} ]
-							},
-							{
-								"element": "#bottom-layer",
-								"modifier": "attr",
-								"parameters": [ {"class": "fragment", "data-fragment-index": "2"} ]
-							}
-						]
-					}
-					-->
-				</div>
-
-				<aside class="notes">
-					<p>
-						TODO: finish schematic
-					</p>
-				</aside>
-			</section>
 
 			<section>
 				<aside class="notes">
@@ -1170,6 +1199,129 @@ offset = 4;
 					</p>
 					<p>
 						I'm happy to take any questions at this time.
+					</p>
+				</aside>
+			</section>
+
+			<section>
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section id="numpy-strided-loops-slide-1">
+				<div class="grid">
+					<div class="code">
+						<pre><code class="language-c" data-trim data-line-numbers="true">
+#define BINARY_DEFS\
+    char *ip1 = args[0], *ip2 = args[1], *op1 = args[2];\
+    npy_intp is1 = steps[0], is2 = steps[1], os1 = steps[2];\
+    npy_intp n = dimensions[0];\
+    npy_intp i;\
+
+#define BINARY_LOOP_SLIDING\
+    for(i = 0; i < n; i++, ip1 += is1, ip2 += is2, op1 += os1)
+
+/** (ip1, ip2) -> (op1) */
+#define BINARY_LOOP\
+    BINARY_DEFS\
+    BINARY_LOOP_SLIDING
+						</code></pre>
+					</div>
+				</div>
+
+				<aside class="notes">
+
+				</aside>
+			</section>
+
+			<section id="numpy-strided-loops-slide-2">
+
+				<div class="grid">
+					<div class="code">
+						<pre><code class="language-c" data-trim data-line-numbers="true">
+/**begin repeat
+ * Float types
+ *  #type = npy_float, npy_double#
+ *  #TYPE = FLOAT, DOUBLE#
+ *  #c = f, #
+ *  #C = F, #
+ */
+/**begin repeat1
+ * Arithmetic
+ * # kind = add, subtract, multiply, divide#
+ * # OP = +, -, *, /#
+ * # PW = 1, 0, 0, 0#
+ */
+NPY_NO_EXPORT void NPY_CPU_DISPATCH_CURFX(@TYPE@_@kind@)
+(char **args, npy_intp const *dimensions, npy_intp const *steps, void *NPY_UNUSED(func))
+{
+    if (IS_BINARY_REDUCE) {
+#if @PW@
+        @type@ * iop1 = (@type@ *)args[0];
+        npy_intp n = dimensions[0];
+
+        *iop1 @OP@= @TYPE@_pairwise_sum(args[1], n, steps[1]);
+#else
+        BINARY_REDUCE_LOOP(@type@) {
+            io1 @OP@= *(@type@ *)ip2;
+        }
+        *((@type@ *)iop1) = io1;
+#endif
+    }
+    else if (!run_binary_simd_@kind@_@TYPE@(args, dimensions, steps)) {
+        BINARY_LOOP {
+            const @type@ in1 = *(@type@ *)ip1;
+            const @type@ in2 = *(@type@ *)ip2;
+            *((@type@ *)op1) = in1 @OP@ in2;
+        }
+    }
+}
+/**end repeat1**/
+/**end repeat**/
+						</code></pre>
+					</div>
+				</div>
+
+				<aside class="notes">
+
+				</aside>
+			</section>
+
+			<section>
+
+				<!-- NOTE: the following are non-presentation elements used for driving the SVG animations -->
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+				<span class="fragment"></span>
+
+				<div data-animate data-src="img/layers_schematic.svg">
+					<!--
+					{
+						"setup": [
+							{
+								"element": "#top-layer",
+								"modifier": "attr",
+								"parameters": [ {"class": "fragment", "data-fragment-index": "0"} ]
+							},
+							{
+								"element": "#middle-layer",
+								"modifier": "attr",
+								"parameters": [ {"class": "fragment", "data-fragment-index": "1"} ]
+							},
+							{
+								"element": "#bottom-layer",
+								"modifier": "attr",
+								"parameters": [ {"class": "fragment", "data-fragment-index": "2"} ]
+							}
+						]
+					}
+					-->
+				</div>
+
+				<aside class="notes">
+					<p>
+						TODO: finish schematic
 					</p>
 				</aside>
 			</section>
