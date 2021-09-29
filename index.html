@@ -106,7 +106,7 @@
 						I work for Quansight, a software consulting company cofounded by Travis Oliphant, the primary original author of NumPy and founding contributor to SciPy.
 					</p>
 					<p>
-						Quansight acts as an intermediary between companies and the open source ecosystems on which those companies depend. Most of the in-house expertise, and thus the consulting work, centers around the PyData stack: NumPy, SciPy, Numba, Dask, PyData Sparse, pandas, Jupyter, conda, and others.
+						As a software consulting company, Quansight acts as an intermediary between companies and the open source ecosystems on which those companies depend. Most of the in-house expertise, and thus the consulting work, centers around the PyData stack: NumPy, SciPy, Numba, Dask, PyData Sparse, pandas, Jupyter, conda, and others.
 					</p>
 					<p>
 						(next fragment)
@@ -339,7 +339,7 @@
 
 				<aside class="notes">
 					<p>
-						Now that we've gotten a sense as to the types of applications which utilize ndarrays--data visualization, three-dimensional rendering and gaming, neural networks and artificial intelligence, and, perhaps unsurprising, more traditional machine learning tasks such as clustering and classification--let's move on to the more technical aspects of their implementation.
+						Now that we've gotten a sense as to the types of applications which utilize ndarrays--data visualization, three-dimensional rendering, gaming, neural networks and artificial intelligence, and, perhaps unsurprisingly, more traditional machine learning tasks such as clustering and classification--let's move on to the more technical aspects of their implementation.
 					</p>
 					<p>
 						To start, we should ask "what is a multidimensional array?"
@@ -403,7 +403,7 @@ arr = [
 
 				<aside class="notes">
 					<p>
-						As an example, consider this example. Here, we have a list of three arrays, each with items.
+						Consider this example. Here, we have a list of three arrays, each with three items.
 					</p>
 					<p>
 						Interpreted as a two-dimensional data structure, this would comprise a 3x3 matrix, where each row is represented by a nested list/array.
@@ -445,7 +445,7 @@ arr = [
 						However, in both scenarios, optimizing data locality for one type of data access de-optimizes the other.
 					</p>
 					<p>
-						In general, for a list of lists/array of arrays approach to storing multidimensional data, we have the following performance characteristics.
+						In general, for an array of arrays approach to storing multidimensional data, we have the following performance characteristics.
 					</p>
 					<p>
 						(fragment)
@@ -563,7 +563,7 @@ col = [arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1]];
 						(fragment)
 					</p>
 					<p>
-						Beside the data layout, there are a few other key differences of this data structure compared to a list of lists/array of arrays.
+						Beside the data layout, there are a few other key differences of this data structure compared to an array of arrays.
 					</p>
 					<p>
 						First, in order to access a single item, we need to perform some arithmetic.
@@ -584,7 +584,7 @@ col = [arr[(0*3)+1], arr[(1*3)+1], arr[(2*3)+1]];
 						(fragment)
 					</p>
 					<p>
-						That same formula can also be applied for retrieving a column, and, thus, avoids the dereferencing overhead implicit in the list of lists/array of arrays implementation.
+						That same formula can also be applied for retrieving a column, and, thus, avoids the dereferencing overhead implicit in the array of arrays implementation.
 					</p>
 					<p>
 						(fragment)
@@ -959,7 +959,7 @@ offset = 4;
 						(fragment)
 					</p>
 					<p>
-						To derive an array with a different shape (and the same number of total elements), we update the shape and strides, without needing to touch the underlying data--something which is not readily achievable when using list of lists/array of arrays.
+						To derive an array with a different shape (and the same number of total elements), we update the shape and strides, without needing to touch the underlying data--something which is not readily achievable when using an array of arrays.
 					</p>
 					<p>
 						(fragment)
@@ -981,15 +981,6 @@ offset = 4;
 					</p>
 				</aside>
 			</section>
-
-
-
-
-
-
-
-
-
 
 			<section id="ndarray-conceptual-diagram-slide" data-transition="fade-in slide-out">
 
@@ -1044,6 +1035,8 @@ offset = 4;
 
 				<aside class="notes">
 					<p>
+						Now that we've discussed strided arrays, we can return our attention to NumPy and its fundamental data structure: the <strong>ndarray</strong>.
+					<p>
 						(fragment)
 					</p>
 					<p>
@@ -1056,13 +1049,13 @@ offset = 4;
 						(fragment)
 					</p>
 					<p>
-						Simply having a collection of items is not sufficient, however, to perform operations on multidimensional data. We need to specify meta data describing the data location and layout.
+						Simply having a collection of items is not sufficient, however, to perform operations on multidimensional data. We need to specify meta data describing the data location (i.e., offset) and layout (i.e., shape and strides).
 					</p>
 					<p>
 						(fragment)
 					</p>
 					<p>
-						By associating the meta data with the collection of items is enough to fully describe and interface with an ndarray.
+						By associating the meta data with the collection of items, we are able to fully describe and interface with an ndarray.
 					</p>
 					<p>
 						(fragment)
@@ -1074,7 +1067,7 @@ offset = 4;
 						(fragment)
 					</p>
 					<p>
-						Using the meta data, we locate and access can an individual item within the collection.
+						Using the meta data, we can locate and access an individual item within the collection.
 					</p>
 					<p>
 						(fragment)
@@ -1086,13 +1079,13 @@ offset = 4;
 						All of this comprises the conceptual model of an ndarray.
 					</p>
 					<p>
-						TODO: consider adding an aside that the layout need not be contiguous (i.e., can be a strided array); but probably we'll get to that.
+						As I hope is evident from previous slides, at its essence, NumPy's ndarray is an implementation of a strided array.
 					</p>
 			</section>
 
+			<!-- TODO: what does NumPy do with strided arrays to achieve is relatively high performance? NumPy vectorized ops slide. -->
+
 			<!-- TODO: additional slides -->
-
-
 
 
 
