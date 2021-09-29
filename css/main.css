@@ -598,6 +598,59 @@ img {
 }
 
 /*
+* Strided array tricks slide.
+*/
+
+#strided-array-tricks-slide .grid {
+	grid-template-columns: repeat(15, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+}
+
+#strided-array-tricks-slide .code {
+	grid-row: 1 / span 4;
+	grid-column: 7 / span 9;
+}
+
+#strided-array-tricks-slide .code pre {
+	margin-left: auto;
+}
+
+#strided-array-tricks-slide .schematics {
+	grid-row: 1 / span 4;
+	grid-column: 2 / span 4;
+}
+
+#strided-array-tricks-slide .schematics.grid {
+	grid-template-columns: repeat(1, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+
+	width: 100%;
+	height: 100vh;
+
+	align-items: center;
+}
+
+#strided-array-tricks-slide .schematics div:nth-child(1) {
+	grid-row: 1 / span 1;
+	grid-column: 1 / span 1;
+}
+
+#strided-array-tricks-slide .schematics div:nth-child(2) {
+	grid-row: 2 / span 1;
+	grid-column: 1 / span 1;
+}
+
+#strided-array-tricks-slide .schematics div:nth-child(3) {
+	grid-row: 3 / span 1;
+	grid-column: 1 / span 1;
+}
+
+#strided-array-tricks-slide .schematics div:nth-child(4) {
+	grid-row: 4 / span 1;
+	grid-column: 1 / span 1;
+}
+
+/*
 * ndarray conceptual diagram slide.
 */
 
