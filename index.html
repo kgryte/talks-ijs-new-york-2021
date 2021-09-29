@@ -805,7 +805,7 @@ oc = (1*sx[1]) + ox;  // 1
 						Lastly, when compared to implicit arrays, strided arrays have extra storage requirements which scale with the number of dimensions.
 					</p>
 					<p>
-						In summary, implicit arrays have better theoretical performance guarantees than their array of arrays counterparts.
+						In summary, in exchange for slightly larger memory requirements, strided arrays offer considerably more flexibility, and thus utility, than their implicit array counterparts.
 					</p>
 					<p>
 						(next slide)
@@ -899,7 +899,7 @@ offset = 7;
 // Matrix transpose...
 shape = [3, 3]; strides = [3, 1]; offset = 0;
 
-// Swap strides:
+// Swap strides (and dimensions):
 strides = [1, 3];
 
 
@@ -924,10 +924,69 @@ offset = 4;
 
 				<aside class="notes">
 					<p>
-
+						To help demonstrate their utility, let's consider a few operations which we effectively get for free when using strided arrays.
+					</p>
+					<p>
+						First, suppose we want to reverse a one-dimensional strided array. We define a shape, strides, and an offset as shown previously.
+					</p>
+					<p>
+						(next fragment)
+					<p>
+						To realize the reverse of this array, we need only negate the stride and adjust the offset.
+					</p>
+					<p>
+						According to our index formula from the previous slide, accessing the first element of our reversed array will access the last element of the underlying collection of items.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Next, suppose we want to take the transpose of a three-by-three matrix.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						To realize the transpose, we simply swap the strides (and, more generally, the dimensions).
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Next, suppose we want to reshape an array from a three-by-three matrix to a three dimensional tensor containing three one-by-three matrices.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						To derive an array with a different shape (and the same number of total elements), we update the shape and strides, without needing to touch the underlying data--something which is not readily achievable when using list of lists/array of arrays.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Lastly, suppose we want to access a two-by-two subarray within our three-by-three matrix.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						To do so, we update the shape and adjust our offset, and, using the index formula shown earlier, we'll only access those elements highlighted in blue.
+					</p>
+					<p>
+						These are only a few examples of how strided arrays are rather useful when working with multidimensional data, as they allow fast slicing and manipulation of views atop a flat underlying data store.
+					</p>
+					<p>
+						(next slide)
 					</p>
 				</aside>
 			</section>
+
+
+
+
+
+
 
 
 
@@ -1033,6 +1092,15 @@ offset = 4;
 
 			<!-- TODO: additional slides -->
 
+
+
+
+
+
+
+
+
+
 			<section>
 
 				<!-- NOTE: the following are non-presentation elements used for driving the SVG animations -->
@@ -1065,7 +1133,9 @@ offset = 4;
 				</div>
 
 				<aside class="notes">
-					(next slide)
+					<p>
+						TODO: finish schematic
+					</p>
 				</aside>
 			</section>
 
