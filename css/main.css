@@ -853,6 +853,23 @@ img {
 }
 
 /*
+* Conclusions slide.
+*/
+
+#conclusions-slide .grid {
+	grid-template-columns: repeat(1, 1fr);
+	grid-template-rows: repeat(1, 1fr);
+}
+
+#conclusions-slide h2 {
+	grid-row: 1 / span 1;
+	grid-column: 1 / span 1;
+
+	justify-self: center;
+	align-self: center;
+}
+
+/*
 * Thank you slide.
 */
 
