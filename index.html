@@ -1413,6 +1413,104 @@ v = y.get(3, 1);
 				</aside>
 			</section>
 
+			<section id="stdlib-blas-slide" data-transition="fade-in">
+				<div class="grid">
+
+					<div class="code">
+						<pre><code class="language-javascript" data-trim data-line-numbers="1-2|4-6|8-10|12-13|15-24|26-28|30-32|34-36|38-40|42-43|45-55|57-59|61-63">
+import array from '@stdlib/ndarray-array';
+import ddot from '@stdlib/blas/ddot';
+
+// Create two one-dimensional vectors:
+let x = array([ 1.0, 2.0, 3.0, 4.0 ]);
+let y = array([ 5.0, 6.0, 7.0, 8.0 ]);
+
+// Compute the dot product:
+let v = ddot(x, y);
+// returns 70
+
+// Import a lower-level ndarray constructor:
+import ndarray from '@stdlib/ndarray-ctor';
+
+// Create a reverse view atop `y`:
+let yr = ndarray(
+	y.dtype,
+	y.data,
+	y.shape,
+	[-1],
+	y.length-1,
+	y.order
+);
+// returns &lt;ndarray&gt;[ 8.0, 7.0, 6.0, 5.0 ]
+
+// Retrieve the first element:
+v = yr.get(0);
+// returns 8.0
+
+// Retrieve the underlying data:
+let data = yr.data;
+// returns &lt;Float64Array&gt;[ 5.0, 6.0, 7.0, 8.0 ]
+
+// Confirm that `yr` is a view:
+let bool = ( y.data === yr.data );
+// returns true
+
+// Compute the dot product with the reversed vector:
+v = ddot(x, yr);
+// returns 60
+
+// Import a lower-level BLAS interface:
+import daxpy from '@stdlib/blas-base-daxpy';
+
+// Compute `y = a*x + y`:
+daxpy.ndarray(
+	x.length,
+	5.0,
+	x.data,
+	x.strides[ 0 ],
+	x.offset,
+	y.data,
+	y.strides[ 0 ],
+	y.offset
+);
+
+// Retrieve the underlying data of `y`:
+data = y.data;
+// returns &lt;ndarray&gt;[ 10, 16, 22, 28 ]
+
+// Compute the dot product with the reversed vector:
+v = ddot(x, yr);
+// returns 160
+						</code></pre>
+					</div>
+
+					<div class="text">
+						<h2>
+							Hardware Optimization
+						</h2>
+					</div>
+
+				</div>
+
+				<aside class="notes">
+					<p>
+						As I mentioned previously, another key ingredient to NumPy's performance is its use of hardware optimized libraries, such as OpenBLAS, for fast CPU-based computation.
+					</p>
+					<p>
+						And so, following in the footsteps of NumPy--and still a work-in-progress--stdlib includes bindings to BLAS interfaces for hardware optimized linear algebra routines when compiled and running in Node.js.
+					</p>
+					<p>
+						As an example, consider the computation of the dot product.
+					</p>
+					<p>
+						As in the previous examples, we'll start by importing stdlib packages.
+					</p>
+					<p>
+						(continue stepping through the example)
+					</p>
+				</aside>
+			</section>
+
 			<section id="perf-comparison-slide" data-transition="slide-in fade-out">
 				<div class="grid">
 					<div class="fragment">

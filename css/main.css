@@ -795,6 +795,27 @@ img {
 }
 
 /*
+* stdlib BLAS slide.
+*/
+
+#stdlib-blas-slide .grid {
+	grid-template-columns: repeat(15, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#stdlib-blas-slide .code {
+	grid-row: 1 / span 5;
+	grid-column: 1 / span 9;
+}
+
+#stdlib-blas-slide .text {
+	grid-row: 3 / span 1;
+	grid-column: 10 / span 5;
+
+	justify-self: center;
+}
+
+/*
 * Performance comparison slide.
 */
 
