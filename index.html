@@ -1532,25 +1532,53 @@ v = ddot(x, yr);
 
 				<aside class="notes">
 					<p>
-						First graph: one-dimensional ndarray with contiguous data.
+						Okay. So it seems stdlib either has, or is working toward, comparable functionality to NumPy. But what about performance?
 					</p>
 					<p>
 						(fragment)
 					</p>
 					<p>
-						Second graph: three dimensional ndarray with contiguous data.
+						First graph: computing the element-wise absolute value over a one-dimensional ndarray with contiguous data.
+					</p>
+					<p>
+						Explain various chart aspects: axes, legend, the higher the bar the better. Note that the y-axis is a log-scale, which eases visualization of results, but visually obscures the magnitude in performance difference.
+					</p>
+					<p>
+						Takeaway: mostly within the same order of magnitude, but not as performant across the board.
 					</p>
 					<p>
 						(fragment)
 					</p>
 					<p>
-						Third graph: three dimensional ndarray with non-contiguous data. With non-contiguous data, cannot use simple loops, but need to either copy to contiguous or use cache oblivious (i.e., block) algorithms.
+						Okay. So what about multdimensional data? In this second graph, I'm showing results for element-wise computation of the absolute value for a three dimensional ndarray with contiguous data.
 					</p>
+					<p>
+						The results effectively the same as for the previous set of benchmarks, which is not unexpected in that a higher-dimensional contiguous array can be treated equivalent to a one-dimensional array for element-wise computation.
 					<p>
 						(fragment)
 					</p>
 					<p>
-						Fourth graph: one-dimensional array-like object (i.e., an untyped generic array) with contiguous data.
+						Okay. So what about non-contiguous data? In this third graph, I'm showing results for element-wise computation of the absolute value for a three dimensional ndarray with non-contiguous data.
+					</p>
+					<p>
+						With non-contiguous data, cannot use simple loops, but need to either copy to contiguous or use cache oblivious (i.e., block) algorithms.
+					</p>
+					<p>
+						Takeaway: results are better than the previous sets of benchmarks, especially for larger arrays; however, although within striking distance, can not yet match NumPy performance.
+					</p>
+					<p>
+						Why? There are two reasons: (1) NumPy uses SIMD allowing it to operate on multiple array elements at once. (2) Especially, for shorter arrays, calling into native add-ons is relatively expensive, requiring the marshalling and unmarshalling of ndarray data as one cross the bridge from JavaScript to C.
+					</p>
+					<p>
+						There are also additional issues with V8 attempting to be--arguably--too clever with how it handles initial typed array memory allocation, leading to performance cliffs when accessing typed array data from within native add-ons.
+					<p>
+						(fragment)
+					</p>
+					<p>
+						For sake of comparison, in this fourth graph, I'm showing results for element-wise computation of the absolute value for a one-dimensional array-like object (i.e., an untyped generic array in JavaScript and a list in Python) with contiguous data.
+					</p>
+					<p>
+						Finally, we've beaten NumPy! The main reason for the observed performance difference is that, when provided a value which is not an ndarray, NumPy first converts that value to an ndarray before performing element-wise computations. In stdlib, no such copy occurs.
 					</p>
 					<p>
 						(next slide)
@@ -1558,19 +1586,35 @@ v = ddot(x, yr);
 				</aside>
 			</section>
 
-			<!-- TODO: some parting words??? -->
+			<section id="conclusions-slide" data-transition="slide-in fade-out">
+				<div class="grid">
+					<h2 class="fragment">
+						<span class="animate fadeIn">Not (yet) faster than NumPy</span>
+					</h2>
+				</div>
 
-
-			<!-- TODO: additional slides -->
-
-
-
-
-
-
-			<section>
 				<aside class="notes">
-					(next slide)
+					<p>
+						So where does this leave us?
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Not (yet) faster than NumPy.
+					</p>
+					<p>
+						However, I am optimistic for the future. I think there are three keys areas for growth.
+					</p>
+					<p>
+						First, taking advantage of data parallelization (i.e., SIMD). WebAssembly could help in this regard, given the relatively recent addition of SIMD support.
+					</p>
+					<p>
+						Second, reducing the Node.js native add-on overhead of calling from JavaScript into C. Node.js core devs are aware of this overhead, and I expect this to improve over time.
+					</p>
+					<p>
+						Third, addressing some of the V8 quirks, such as array allocation strategies, that trigger performance cliffs. This is a bit harder to address, but as numerical computation on the web becomes more common, I'd expect that we'll figure out workarounds which address some of the optimized use cases that V8 is targeting, while not negatively impacting other use cases where such optimizations are not desired.
+					</p>
 				</aside>
 			</section>
 
@@ -1596,7 +1640,7 @@ v = ddot(x, yr);
 
 				<aside class="notes">
 					<p>
-						Thank you for attending this talk. I hope it has been informative. :)
+						And with that, I'd like to conclude this talk. Thank you for attending. I hope it has been informative. :)
 					</p>
 					<p>
 						If you want to know more, you can find me on <a href="https://github.com/kgryte">GitHub</a> and Twitter.
