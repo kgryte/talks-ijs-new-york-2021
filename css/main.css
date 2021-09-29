@@ -753,6 +753,48 @@ img {
 }
 
 /*
+* stdlib ndarray slide.
+*/
+
+#stdlib-ndarray-slide .grid {
+	grid-template-columns: repeat(15, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#stdlib-ndarray-slide .code {
+	grid-row: 1 / span 5;
+	grid-column: 1 / span 9;
+}
+
+#stdlib-ndarray-slide .text {
+	grid-row: 3 / span 1;
+	grid-column: 10 / span 5;
+
+	justify-self: center;
+}
+
+/*
+* stdlib vectorization slide.
+*/
+
+#stdlib-vectorization-slide .grid {
+	grid-template-columns: repeat(15, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#stdlib-vectorization-slide .code {
+	grid-row: 1 / span 5;
+	grid-column: 1 / span 9;
+}
+
+#stdlib-vectorization-slide .text {
+	grid-row: 3 / span 1;
+	grid-column: 10 / span 5;
+
+	justify-self: center;
+}
+
+/*
 * Performance comparison slide.
 */
 

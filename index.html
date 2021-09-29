@@ -1166,7 +1166,16 @@ offset = 4;
 						As I alluded to at the start of this talk, I contribute to a project with this explicit goal: stdlib.
 					</p>
 					<p>
-						And similar to NumPy, stdlib utilizes ndarrays for its fundamental data structure for operating on multidimensional arrays.
+						And, as much as possible, stdlib tries to emulate NumPy in various respects.
+					</p>
+					<p>
+						First and foremost, stdlib utilizes ndarrays for its fundamental data structure for operating on multidimensional arrays.
+					</p>
+					<p>
+						(next slide)>
+					</p>
+					<p>
+						------------
 					</p>
 					<p>
 						(click on the logo and navigate to stdlib/ndarray/array)
@@ -1230,6 +1239,176 @@ offset = 4;
 					</p>
 					<p>
 						(next slide)
+					</p>
+				</aside>
+			</section>
+
+			<section id="stdlib-ndarray-slide" data-transition="fade-in">
+				<div class="grid">
+
+					<div class="code">
+						<pre><code class="language-javascript" data-trim data-line-numbers="1|3-7|9-11|13-15|17-19|21-23|25-27|29-31|33-35|37-38|40-42|44-46|48-53">
+import array from '@stdlib/ndarray-array';
+
+// Create a 4-dimensional array:
+const arr = array({
+    'dtype': 'float32',
+    'shape': [ 3, 3, 3, 3 ]
+});
+
+// Retrieve the array shape:
+const shape = arr.shape;
+// returns [ 3, 3, 3, 3 ]
+
+// Retrieve the array strides:
+const strides = arr.strides;
+// returns [ 27, 9, 3, 1 ];
+
+// Retrieve the array offset:
+const offset = arr.offset;
+// returns 0
+
+// Retrieve the array dtype:
+const dtype = arr.dtype;
+// returns 'float32'
+
+// Retrieve the underlying array data:
+const data = arr.data;
+// returns &lt;Float32Array&gt;[ 0, ..., 0 ]
+
+// Retrieve the array byte length:
+const byteLength = arr.byteLength;
+// returns 324
+
+// Retrieve an array value:
+let v = arr.get( 1, 2, 1, 2 );
+// returns 0.0
+
+// Set an array value:
+arr.set( 1, 2, 1, 2, 10.0 );
+
+// Retrieve the array value:
+v = arr.get( 1, 2, 1, 2 );
+// returns 10.0
+
+// Serialize as JSON:
+const json = arr.toJSON();
+// returns {"type":"ndarray","dtype":"float32","flags":{},"order":"row-major","shape":[3,3,3,3],"strides":[27,9,3,1],"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+
+// Create a 2x2 matrix:
+const arr2 = array([
+	[ 1.0, 2.0 ],
+	[ 3.0, 4.0 ]
+]);
+// returns &lt;ndarray&gt;[ 1.0, 2.0; 3.0, 4.0 ]
+						</code></pre>
+					</div>
+
+					<div class="text">
+						<h2>
+							ndarray
+						</h2>
+					</div>
+
+				</div>
+
+				<aside class="notes">
+					<p>
+						(introducing the ndarray)
+					</p>
+					<p>
+						To begin working with ndarrays, one can important the following package...
+					</p>
+					<p>
+						(continue stepping through the code example)
+					</p>
+				</aside>
+			</section>
+
+			<section id="stdlib-vectorization-slide" data-transition="fade-in">
+				<div class="grid">
+
+					<div class="code">
+						<pre><code class="language-javascript" data-trim data-line-numbers="1-2|4-6|8-10|12-14|16-18|20-22|24-28|30-31|33-44">
+import array from '@stdlib/ndarray-array';
+import abs from '@stdlib/math-special-abs';
+
+// Create a one-dimensional vector:
+let x = array([ -1.0, -2.0 ]);
+// returns &lt;ndarray&gt;[ -1.0, -2.0 ]
+
+// Retrieve the shape:
+let shape = x.shape;
+// returns [ 2 ]
+
+// Retrieve the dtype:
+let dtype = x.dtype;
+// returns 'float64'
+
+// Compute the absolute value for each element:
+let y = abs( x );
+// returns &lt;ndarray&gt;[ 1.0, 2.0 ]
+
+// Retrieve the shape:
+shape = y.shape;
+// returns [ 2 ]
+
+// Define an output array:
+y = array({
+	'shape': [ 4, 2 ]
+});
+// returns &lt;ndarray&gt;[ 0.0, 0.0; 0.0, 0.0; 0.0, 0.0; 0.0, 0.0 ]
+
+// Broadcast results across rows:
+abs.assign( x, y );
+
+// Retrieve values:
+let v = y.get(0, 0);
+// returns 1.0
+
+v = y.get(0, 1);
+// returns 2.0
+
+v = y.get(1, 0);
+// returns 1.0
+
+v = y.get(3, 1);
+// returns 2.0
+						</code></pre>
+					</div>
+
+					<div class="text">
+						<h2>
+							Vectorization and Broadcasting
+						</h2>
+					</div>
+
+				</div>
+
+				<aside class="notes">
+					<p>
+						Okay, so there's an ndarray API. But what can you do with it?
+					</p>
+					<p>
+						Similar to NumPy, stdlib provides vectorized interfaces for performing element-wise operations on multidimensional arrays (in NumPy lingo, these are "ufuncs", or "universal functions")--although, I should state that this is very much a work in progress.
+					</p>
+					<p>
+						Apart from its bindings to hardware optimized libraries, NumPy's internals are essentially a bunch of for-loops, enhanced with SIMD, written in C.
+					</p>
+					<p>
+						stdlib is no different, in that, internally, stdlib tries to delegate to optimized loops for iterating over ndarray elements.
+					</p>
+					<p>
+						In the browser, these loops are implemented in JavaScript, and, in Node.js, these loops are written in C and accessed through native add-ons.
+					</p>
+					<p>
+						As an example of how to use vectorized APIs, consider the use case of computing the element-wise absolute value.
+					</p>
+					<p>
+						To start, we begin by importing two packages: one to create an ndarray and another to compute the absolute value.
+					</p>
+					<p>
+						(continue walking through the code example)
 					</p>
 				</aside>
 			</section>
