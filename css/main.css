@@ -733,6 +733,26 @@ img {
 }
 
 /*
+* stdlib splash slide.
+*/
+
+#stdlib-splash-slide .grid {
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+}
+
+#stdlib-splash-slide .grid .image-wrapper {
+	grid-row: 3 / span 1;
+	grid-column: 2 / span 3;
+
+	justify-self: center;
+}
+
+#stdlib-splash-slide .grid img {
+	width: 600px;
+}
+
+/*
 * Thank you slide.
 */
 

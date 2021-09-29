@@ -1091,10 +1091,6 @@ offset = 4;
 					</p>
 			</section>
 
-			<!-- TODO: what does NumPy do with ndarrays to achieve high performance? -->
-
-			<!-- Hardware optimized libraries such as OpenBLAS, vectorized operations (interfaces, such as the universal function interface (aka ufuncs) which explicitly operate on ndarrays, rather than relying on users to perform element-wise iteration in Python), SIMD instructions, broadcasting -->
-
 			<section id="numpy-perf-slide">
 
 				<div class="grid">
@@ -1103,7 +1099,7 @@ offset = 4;
 					</div>
 
 					<div class="fragment">
-						<h2 class="animated flipInX">SIMD</h2>
+						<h2 class="animated flipInX">Parallelization</h2>
 					</div>
 
 					<div class="fragment">
@@ -1117,7 +1113,7 @@ offset = 4;
 
 				<aside class="notes">
 					<p>
-						So how does NumPy leverage ndarrays to unlock better performance?
+						So how does NumPy leverage ndarrays to unlock better performance? There are four ways.
 					</p>
 					<p>
 						(fragment)
@@ -1150,12 +1146,52 @@ offset = 4;
 						Instead, NumPy virtually repeats a scalar simply by creating a single element ndarray with a modified shape and strides.
 					</p>
 					<p>
-						Accordingly, broadcasting enables better performance by avoiding data copies.
+						In short, broadcasting enables better performance by avoiding data copies.
 					</p>
 				</aside>
 			</section>
 
+			<section id="stdlib-splash-slide" data-transition="slide-in fade-out">
+				<div class="grid">
+					<div class="image-wrapper">
+						<a href="https://stdlib.io/docs/api/latest"><img class="animated fadeIn slow" data-delay="500" data-src="img/stdlib_logo_banner.svg" href="stdlib logo"></a>
+					</div>
+				</div>
 
+				<aside class="notes">
+					<p>
+						So what does all this mean for JavaScript, and is it possible to leverage the same four secrets to NumPy performance in JavaScript and Node.js?
+					</p>
+					<p>
+						As I alluded to at the start of this talk, I contribute to a project with this explicit goal: stdlib.
+					</p>
+					<p>
+						(click on the logo and navigate to stdlib/ndarray/array)
+					</p>
+					<p>
+						A few notes:
+					</p>
+					<ul>
+						<li>generic ndarray creation API</li>
+						<li>can create fresh arrays or views</li>
+						<li>returned object can be JSON serialized for transfer over wire (see examples)</li>
+					</ul>
+					<p>
+						(navigate to stdlib/ndarray/array-ctor)
+					</p>
+					<p>
+						A few notes:
+					</p>
+					<ul>
+						<li>lower level API</li>
+						<li>highlight set/get APIs</li>
+						<li>highlight accessible C APIs for use in Node.js native add-ons and elsewhere</li>
+					</ul>
+					<p>
+						(next slide)
+					</p>
+				</aside>
+			</section>
 
 			<!-- TODO: additional slides -->
 
