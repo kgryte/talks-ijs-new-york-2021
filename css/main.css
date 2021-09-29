@@ -753,6 +753,43 @@ img {
 }
 
 /*
+* Performance comparison slide.
+*/
+
+#perf-comparison-slide .grid {
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+
+	row-gap: 10px;
+	column-gap: 10px;
+}
+
+#perf-comparison-slide .grid div {
+	display: block;
+	align-self: center;
+}
+
+#perf-comparison-slide .grid div:nth-child(1) {
+	grid-row: 1 / span 1;
+	grid-column: 1 / span 1;
+}
+
+#perf-comparison-slide .grid div:nth-child(2) {
+	grid-row: 1 / span 1;
+	grid-column: 2 / span 1;
+}
+
+#perf-comparison-slide .grid div:nth-child(3) {
+	grid-row: 2 / span 1;
+	grid-column: 1 / span 1;
+}
+
+#perf-comparison-slide .grid div:nth-child(4) {
+	grid-row: 2 / span 1;
+	grid-column: 2 / span 1;
+}
+
+/*
 * Thank you slide.
 */
 

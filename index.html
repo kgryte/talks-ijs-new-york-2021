@@ -478,7 +478,7 @@ arr = [
 						(fragment)
 					</p>
 					<p>
-						Lastly, storage requirements scale exponentially with the number of dimensions due to the need for intermediate arrays containing pointers.
+						Lastly, storage requirements scale according to \( O(n^{d-1}) \) due to the need for intermediate arrays containing pointers.
 					</p>
 					<p>
 						(next slide)
@@ -1125,7 +1125,7 @@ offset = 4;
 						(fragment)
 					</p>
 					<p>
-						Second, NumPy takes advantage of SIMD operations for parallelization (i.e., operating on elements within a strided array at the same time).
+						Second, NumPy takes advantage of SIMD operations for parallelization (i.e., operating on multiple elements within a strided array at the same time).
 					</p>
 					<p>
 						(fragment)
@@ -1140,10 +1140,10 @@ offset = 4;
 						Lastly, NumPy supports broadcasting semantics (i.e., the ability to tile a lower dimensional array to a higher dimension without copying data).
 					</p>
 					<p>
-						For example, when multiplying a matrix by scalar, NumPy does not instantiate a second matrix with the same dimensions as the first and with every element having a value equal to the scalar.
+						For example, when multiplying a matrix by scalar, NumPy does not instantiate a second matrix with the same dimensions as the first and set every element to a value equal to the scalar.
 					</p>
 					<p>
-						Instead, NumPy virtually repeats a scalar simply by creating a single element ndarray with a modified shape and strides.
+						Instead, NumPy virtually repeats a scalar by simply creating a single element ndarray with modified shape and strides.
 					</p>
 					<p>
 						In short, broadcasting enables better performance by avoiding data copies.
@@ -1164,6 +1164,9 @@ offset = 4;
 					</p>
 					<p>
 						As I alluded to at the start of this talk, I contribute to a project with this explicit goal: stdlib.
+					</p>
+					<p>
+						And similar to NumPy, stdlib utilizes ndarrays for its fundamental data structure for operating on multidimensional arrays.
 					</p>
 					<p>
 						(click on the logo and navigate to stdlib/ndarray/array)
@@ -1188,10 +1191,98 @@ offset = 4;
 						<li>highlight accessible C APIs for use in Node.js native add-ons and elsewhere</li>
 					</ul>
 					<p>
+						Building on the ndarray, we are currently working on vectorized interfaces for ndarray operations.
+					</p>
+					<p>
+						For example, we've recently started adding the equivalent of universal functions interfaces to the project.
+					</p>
+					<p>
+						(navigate to stdlib/math/special/abs)
+					</p>
+					<p>
+						A few notes:
+					</p>
+					<ul>
+						<li>can operate on numbers, array-like objects, and ndarrays</li>
+						<li>by default, return an new array</li>
+						<li>an "assign" API for mutating a previously allocated array to allow for memory reuse</li>
+					</ul>
+					<p>
+						For hardware optimization, we've been slowly adding BLAS interfaces for linear algebra computations.
+					</p>
+					<p>
+						(navigate to stdlib/blas/base/daxpy)
+					</p>
+					<p>
+						BLAS interfaces are lower level interfaces for operating on contiguous strided array data.
+					</p>
+					<p>
+						Similar to NumPy, we've added bindings to OpenBLAS for hardware optimized linear algebra routines when compiled and running in Node.js.
+					</p>
+					<p>
+						And similar to the ndarray constructor interface earlier, we also provide C APIs for interfacing with these APIs in Node.js native add-ons.
+					</p>
+					<p>
+						In terms of parallelization, we do not currently leverage SIMD, but it is something we'd like to add in the future.
+					</p>
+					<p>
+						And in terms of broadcasting, we've recently started adding broadcasting support, but this is still very much a work in progress.
+					</p>
+					<p>
 						(next slide)
 					</p>
 				</aside>
 			</section>
+
+			<section id="perf-comparison-slide" data-transition="slide-in fade-out">
+				<div class="grid">
+					<div class="fragment">
+						<img class="animated flipInX" data-src="img/perf_ndarray_ndims_1_contiguous.svg" alt="Performance results" class="undecorated" width="100%">
+					</div>
+
+					<div class="fragment">
+						<img class="animated flipInX" data-src="img/perf_ndarray_ndims_3_contiguous.svg" alt="Performance results" class="undecorated" width="100%">
+					</div>
+
+					<div class="fragment">
+						<img class="animated flipInX" data-src="img/perf_ndarray_ndims_3_noncontiguous.svg" alt="Performance results" class="undecorated" width="100%">
+					</div>
+
+					<div class="fragment">
+						<img class="animated flipInX" data-src="img/perf_array_like_ndims_1_contiguous.svg" alt="Performance results" class="undecorated" width="100%">
+					</div>
+				</div>
+
+				<aside class="notes">
+					<p>
+						First graph: one-dimensional ndarray with contiguous data.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Second graph: three dimensional ndarray with contiguous data.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Third graph: three dimensional ndarray with non-contiguous data. With non-contiguous data, cannot use simple loops, but need to either copy to contiguous or use cache oblivious (i.e., block) algorithms.
+					</p>
+					<p>
+						(fragment)
+					</p>
+					<p>
+						Fourth graph: one-dimensional array-like object (i.e., an untyped generic array) with contiguous data.
+					</p>
+					<p>
+						(next slide)
+					</p>
+				</aside>
+			</section>
+
+			<!-- TODO: some parting words??? -->
+
 
 			<!-- TODO: additional slides -->
 
