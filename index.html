@@ -1813,6 +1813,12 @@ NPY_NO_EXPORT void NPY_CPU_DISPATCH_CURFX(@TYPE@_@kind@)
 			// Specify the default transition style:
 			'transition': 'slide',
 
+			// Configure PDF export to not display fragments as separate pages:
+			'pdfSeparateFragments': false,
+
+			// Ensure that slides do not spread across multiple pages:
+			'pdfMaxPagesPerSlide': 1,
+
 			// Configure the Appearance plugin:
 			'appearance': {
 				// Display the elements when moving backward in the presentation:
